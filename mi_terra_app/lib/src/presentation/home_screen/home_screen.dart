@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('1')),
+                        child: Center(child: Text('Harvest')),
                       ),
                     ),
                   ),
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('2')),
+                        child: Center(child: Text('Profits')),
                       ),
                     ),
                   ),

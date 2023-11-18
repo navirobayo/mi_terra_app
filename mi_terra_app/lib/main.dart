@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mi_terra_app/src/persistence/flutter_oveja_go_theme.dart';
 import 'package:mi_terra_app/src/presentation/welcome_screen/welcome_screen.dart';
 
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Oveja Go 1.0.0',
+      title: 'Mi Terra App 1.0.0',
       theme: FlutterOvejaGoTheme.lightTheme,
       darkTheme: FlutterOvejaGoTheme.darkTheme,
       home: const WelcomeScreen(),

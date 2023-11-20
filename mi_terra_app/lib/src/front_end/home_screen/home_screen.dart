@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text("Hola $testUserName"),
+          title: const Text(appName + appVersion),
           actions: const [
             IconButton(onPressed: null, icon: Icon(Icons.settings))
           ]),
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mi cosecha')),
+                        child: Center(child: Text('Inventario')),
                       ),
                     ),
                   ),
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Ganancias')),
+                        child: Center(child: Text('Mis ventas')),
                       ),
                     ),
                   ),
@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mis animales')),
+                        child: Center(child: Text('Gastos')),
                       ),
                     ),
                   ),
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Inventario')),
+                        child: Center(child: Text('Mi cosecha')),
                       ),
                     ),
                   ),

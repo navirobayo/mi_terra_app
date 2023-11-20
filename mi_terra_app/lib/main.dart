@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'src/private/firebase_options.dart';
 
 //* Welcome. Mi Terra App Ver. 1.0.0
 //

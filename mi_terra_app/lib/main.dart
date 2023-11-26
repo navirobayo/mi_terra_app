@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
-import 'package:mi_terra_app/src/components/flutter_mi_terra_theme.dart';
+import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'src/private/firebase_options.dart';

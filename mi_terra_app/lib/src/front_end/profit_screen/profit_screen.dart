@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/components/global_strings.dart';
+import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 
 class ProfitScreen extends StatelessWidget {
   const ProfitScreen({super.key});

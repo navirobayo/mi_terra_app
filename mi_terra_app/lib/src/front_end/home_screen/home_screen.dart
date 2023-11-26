@@ -1,10 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/components/global_strings.dart';
-import 'package:mi_terra_app/src/front_end/profit_screen/profit_screen.dart';
+import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
+import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
+import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void addNewExpense(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Nuevo gasto"),
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  child: const Text("Añadir"),
+                  onTap: () {},
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  child: const Text("Cancelar"),
+                  onTap: () {},
+                )
+              ],
+            )),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +68,24 @@ class HomeScreen extends StatelessWidget {
                       child: InkWell(
                         splashColor:
                             Theme.of(context).colorScheme.onSurfaceVariant,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const StoreScreen(),
+                          ));
+                        },
                         child: const SizedBox(
                           width: 130,
                           height: 60,
-                          child: Center(child: Text('Nueva venta')),
+                          child: Center(child: Text('Mi tienda')),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 30,
                   ),
                   const Text(
-                    testConnectionStatusFalse,
+                    "Hola, $testUserName",
                     style: TextStyle(fontSize: 25),
                   ),
                 ],
@@ -82,13 +116,13 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProfitScreen(),
+                          builder: (context) => const TasksScreen(),
                         ));
                       },
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mis ventas')),
+                        child: Center(child: Text('Pendientes')),
                       ),
                     ),
                   ),
@@ -109,7 +143,74 @@ class HomeScreen extends StatelessWidget {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Gastos')),
+                        child: Center(child: Text('Mi cosecha')),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    children: [
+                      Card(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        clipBehavior: Clip.hardEdge,
+                        elevation: 3,
+                        child: InkWell(
+                          splashColor:
+                              Theme.of(context).colorScheme.onSurfaceVariant,
+                          onTap: () {
+                            addNewExpense(context);
+                          },
+                          child: const SizedBox(
+                            width: 150,
+                            height: 60,
+                            child: Center(child: Text('Nuevo gasto')),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Card(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        clipBehavior: Clip.hardEdge,
+                        elevation: 3,
+                        child: InkWell(
+                          splashColor:
+                              Theme.of(context).colorScheme.onSurfaceVariant,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const StoreScreen(),
+                            ));
+                          },
+                          child: const SizedBox(
+                            width: 150,
+                            height: 60,
+                            child: Center(child: Text('Nueva venta')),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Card(
+                    clipBehavior: Clip.hardEdge,
+                    elevation: 3,
+                    child: InkWell(
+                      splashColor: Theme.of(context).colorScheme.primary,
+                      onTap: () {},
+                      child: const SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Center(child: Text('Mercado orgánico')),
                       ),
                     ),
                   ),
@@ -125,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mi cosecha')),
+                        child: Center(child: Text('Mis finanzas')),
                       ),
                     ),
                   ),

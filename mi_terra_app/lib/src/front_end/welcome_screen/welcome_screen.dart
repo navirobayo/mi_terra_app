@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/components/global_strings.dart';
+import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/front_end/email_authentication_screen/email_authentication_screen.dart';
 import 'package:mi_terra_app/src/front_end/google_authentication_screen/google_authentication_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,12 +26,12 @@ import 'src/private/firebase_options.dart';
 
 //! The app starts here.
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
+  Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
+  ).then((value) => Get.put(AuthenticationRepository()));
 
   runApp(const MyApp());
 }
@@ -39,12 +41,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mi Terra App 1.0.0',
       theme: FlutterMiTerraTheme.lightTheme,
+      defaultTransition: Transition.leftToRightWithFade,
       darkTheme: FlutterMiTerraTheme.darkTheme,
-      home: const WelcomeScreen(),
+      home: const CircularProgressIndicator(),
     );
   }
 }

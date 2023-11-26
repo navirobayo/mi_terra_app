@@ -1,6 +1,6 @@
 name: mi_terra_app
 description: A mobile and desktop app for farmers.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -10,18 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  bloc: ^8.1.0
-  equatable: ^2.0.3
-  formz: ^0.6.0
   cupertino_icons: ^1.0.2
   firebase_auth: ^4.14.0
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  bloc_test: ^9.1.0
   flutter_lints: ^2.0.0
-  mocktail: ^1.0.0
 
 flutter:
   uses-material-design: true

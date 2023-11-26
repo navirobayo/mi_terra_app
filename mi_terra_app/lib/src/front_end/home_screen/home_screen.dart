@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/components/global_strings.dart';
 import 'package:mi_terra_app/src/front_end/profit_screen/profit_screen.dart';
+import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +13,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text(appName + appVersion),
-          actions: const [
-            IconButton(onPressed: null, icon: Icon(Icons.settings))
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SettingsScreen(),
+                  ));
+                },
+                icon: const Icon(Icons.settings))
           ]),
       body: Padding(
         padding: const EdgeInsets.all(10),

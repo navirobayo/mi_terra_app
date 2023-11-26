@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/components/global_strings.dart';
 
-class ProfitScreen extends StatefulWidget {
+class ProfitScreen extends StatelessWidget {
   const ProfitScreen({super.key});
 
-  @override
-  State<ProfitScreen> createState() => _ProfitScreenState();
-}
-
-class _ProfitScreenState extends State<ProfitScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

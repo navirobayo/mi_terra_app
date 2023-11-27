@@ -165,7 +165,7 @@ class HomeScreen extends StatelessWidget {
                           child: const SizedBox(
                             width: 150,
                             height: 60,
-                            child: Center(child: Text('Nuevo gasto')),
+                            child: Center(child: Text('Añadir gasto')),
                           ),
                         ),
                       ),
@@ -187,7 +187,7 @@ class HomeScreen extends StatelessWidget {
                           child: const SizedBox(
                             width: 150,
                             height: 60,
-                            child: Center(child: Text('Nueva venta')),
+                            child: Center(child: Text('Añadir venta')),
                           ),
                         ),
                       ),

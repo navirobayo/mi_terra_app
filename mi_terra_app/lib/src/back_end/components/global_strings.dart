@@ -5,3 +5,4 @@ const String testUserGlobalProfit = "200000";
 const String testUserLastHarvest = "50000";
 const String testConnectionStatusTrue = "En línea";
 const String testConnectionStatusFalse = "Fuera de línea";
+const String testUserTask1 = "Invertir el primer millón";

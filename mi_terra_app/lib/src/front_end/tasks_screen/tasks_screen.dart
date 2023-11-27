@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/front_end/tasks_screen/segmented_button_widget.dart';
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -10,14 +10,34 @@ class TasksScreen extends StatefulWidget {
 
 class _TasksScreenState extends State<TasksScreen> {
   bool? isChecked = false;
-  bool? isPending = true;
+  TaskStatus selectedStatus = TaskStatus.pending;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
-          SegmentedButton(
-              segments: [ButtonSegment(value: isPending)], selected: Set()),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SegmentedButton<TaskStatus>(
+              segments: const <ButtonSegment<TaskStatus>>[
+                ButtonSegment<TaskStatus>(
+                  value: TaskStatus.pending,
+                  label: Text('Pending'),
+                ),
+                ButtonSegment<TaskStatus>(
+                  value: TaskStatus.completed,
+                  label: Text('Completed'),
+                ),
+              ],
+              selected: <TaskStatus>{selectedStatus},
+              onSelectionChanged: (Set<TaskStatus> newSelection) {
+                setState(() {
+                  selectedStatus = newSelection.first;
+                });
+              },
+            ),
+          ),
         ],
       ),
       floatingActionButton:

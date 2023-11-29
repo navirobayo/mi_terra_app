@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/front_end/harvest_screen/harvest_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
 import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
@@ -139,7 +140,11 @@ class HomeScreen extends StatelessWidget {
                     elevation: 3,
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.primary,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const HarvestScreen(),
+                        ));
+                      },
                       child: const SizedBox(
                         width: 150,
                         height: 150,

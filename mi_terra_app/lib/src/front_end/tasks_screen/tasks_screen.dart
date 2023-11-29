@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/front_end/tasks_screen/segmented_button_widget.dart';
+
+enum TaskStatus { pending, completed }
 
 class TasksScreen extends StatefulWidget {
   const TasksScreen({super.key});
@@ -15,7 +16,7 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.all(20),

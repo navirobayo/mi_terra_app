@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/back_end/components/custom_action_button_widget.dart';
-import 'package:mi_terra_app/src/back_end/components/custom_text_for_action_button_widget.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 
 double defaultTextSpacer = 60;
 double defaultCardSpacer = 20;
 
-class HarvestDetailsScreen extends StatelessWidget {
-  const HarvestDetailsScreen({super.key});
+class ProductsDetailsScreen extends StatelessWidget {
+  const ProductsDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

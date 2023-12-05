@@ -35,16 +35,6 @@ class RegistrationScreen extends StatelessWidget {
                           decoration: const InputDecoration(
                               labelText: "Crea una contraseña"),
                         ),
-                        //! To do: Validate that the password is correct.
-                        /* TextFormField(
-                      decoration: const InputDecoration(
-                          labelText: "Confirma la contraseña que creaste"),
-                    ),*/
-                        TextFormField(
-                          controller: controller.terraUser,
-                          decoration: const InputDecoration(
-                              labelText: "Tu nombre o un apodo"),
-                        ),
                         TextButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {

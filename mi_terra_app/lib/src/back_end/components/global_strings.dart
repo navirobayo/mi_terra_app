@@ -1,6 +1,6 @@
 const String appName = "Mi Terra App";
 const String appVersion = "1.0.0";
-const String testUserName = "Carlos";
+const String testUserName = "Juan";
 const String testUserGlobalProfit = "200000";
 const String testUserLastHarvest = "50000";
 const String testConnectionStatusTrue = "En línea";
@@ -11,5 +11,5 @@ const String testHarvestTime1 = "15 días";
 const String testWaterTime1 = "3 días";
 const String testNumberOfSeeds = "5";
 const String testHarvest1Date = "28/11/2023";
-const String testHarvestNote1 = "Siembra iniciada";
+const String testHarvestNote1 = "Siembra terminada";
 const String testHarvestNote2 = "Nueva capa de abono";

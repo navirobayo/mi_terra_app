@@ -52,5 +52,7 @@ class AuthenticationRepository extends GetxController {
     } catch (_) {}
   }
 
+  //! To do: Add Log In Exceptions.
+
   Future<void> logout() async => await _auth.signOut();
 }

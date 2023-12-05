@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
+import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
 import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'src/private/firebase_options.dart';
@@ -26,18 +27,28 @@ import 'src/private/firebase_options.dart';
 
 //! The app starts here.
 
-void main() {
+Future<void> initializeDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  ).then((value) => Get.put(AuthenticationRepository()));
-
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  Get.put(
+      AuthenticationRepository()); // This repository handles authentication functions.
+  Get.put(
+      UserRepository()); // This repository handles data fetching and writing for the user's folder. // This controller handles the image creation.
+  // This controller handles the image creation.
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// The main function of the app.
+void main() async {
+  // Initialize dependencies before running the app
+  await initializeDependencies();
+
+  runApp(
+    const App(),
+  );
+}
+
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {

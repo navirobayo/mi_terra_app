@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
-import 'package:mi_terra_app/src/front_end/harvest_screen/harvest_screen.dart';
+import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
 import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text(appName + appVersion),
+          title: const Text("Hola, $testUserName"),
           actions: [
             IconButton(
                 onPressed: () {
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                         child: const SizedBox(
                           width: 130,
                           height: 60,
-                          child: Center(child: Text('Mi tienda')),
+                          child: Center(child: Text('Mi Tienda')),
                         ),
                       ),
                     ),
@@ -86,8 +86,8 @@ class HomeScreen extends StatelessWidget {
                     width: 30,
                   ),
                   const Text(
-                    "Hola, $testUserName",
-                    style: TextStyle(fontSize: 25),
+                    "Ganancias:, $testUserGlobalProfit",
+                    // style: TextStyle(fontSize: 25),
                   ),
                 ],
               ),
@@ -142,13 +142,13 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const HarvestScreen(),
+                          builder: (context) => const ProductsScreen(),
                         ));
                       },
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mi cosecha')),
+                        child: Center(child: Text('Mis productos')),
                       ),
                     ),
                   ),

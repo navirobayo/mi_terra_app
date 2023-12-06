@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
@@ -30,11 +31,9 @@ import 'src/private/firebase_options.dart';
 Future<void> initializeDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  Get.put(
-      AuthenticationRepository()); // This repository handles authentication functions.
-  Get.put(
-      UserRepository()); // This repository handles data fetching and writing for the user's folder. // This controller handles the image creation.
-  // This controller handles the image creation.
+  Get.put(AuthenticationRepository());
+  Get.put(UserRepository());
+  Get.put(ProductsController());
 }
 
 // The main function of the app.

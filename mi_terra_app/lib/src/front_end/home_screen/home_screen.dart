@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                         child: const SizedBox(
                           width: 130,
                           height: 60,
-                          child: Center(child: Text('Mi Tienda')),
+                          child: Center(child: Text('Mi Catálogo')),
                         ),
                       ),
                     ),

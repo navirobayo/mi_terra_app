@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
+import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_details_screen.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class ProductsScreen extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             controller.createProduct();
-                            Navigator.of(context).pop();
+                            Get.offAll(const HomeScreen());
                           },
                           child: const Text("Crear producto")),
                     ],

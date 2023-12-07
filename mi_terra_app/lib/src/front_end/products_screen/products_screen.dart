@@ -59,6 +59,7 @@ class ProductsScreen extends StatelessWidget {
                         return ListTile(
                           title: Text(productsController.products[index]
                               ['product_name']),
+                          leading: const Icon(Icons.nature),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>

@@ -8,6 +8,8 @@ class ProductController extends GetxController {
 
   TextEditingController productName = TextEditingController();
 
+  //! To do: Add snackbar confirming the creation of the new product.
+
   Future<void> createProduct() async {
     final productId = const Uuid().v4();
     final Map<String, dynamic> productData = {

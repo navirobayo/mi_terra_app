@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
 
 double defaultTextSpacer = 60;
 double defaultCardSpacer = 20;
@@ -10,11 +11,17 @@ class ProductsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(testHarvestTitle1),
-      ),
+      appBar: AppBar(title: const Text(testHarvestTitle1), actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const ProductSettingsScreen(),
+              ));
+            },
+            icon: const Icon(Icons.settings))
+      ]),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
             Row(
@@ -27,103 +34,78 @@ class ProductsDetailsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     image: const DecorationImage(
                       image: NetworkImage(
-                          "https://as1.ftcdn.net/v2/jpg/06/28/98/30/1000_F_628983007_ot4QbSRTc1RrJMdjSHHyf0VeBMbV5PiC.jpg"),
+                          "https://firebasestorage.googleapis.com/v0/b/mi-terra-app.appspot.com/o/terra_database%2FCaptura%20de%20pantalla%202023-12-06%20212051.png?alt=media&token=5c031e59-c48e-4b5c-9aeb-6e0b84c3ca08"),
                     ),
                   ),
                 ),
+                const SizedBox(
+                  width: 30,
+                ),
                 const Column(
                   children: [
-                    Text("En cosecha: $testHarvestTime1"),
-                    Text("Se riega cada: $testWaterTime1"),
-                    Text("Semillas/plantas: $testNumberOfSeeds"),
+                    Text("En producción: $testHarvestTime1 días"),
+                    Text("Frecuencia de venta: $testProductSaleFrequency días"),
+                    Text("Plantas/animales: $testNumberOfSeeds"),
                   ],
                 ),
               ],
             ),
-            Container(
-              height: 150,
-              child: ListView(
-                children: const [
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                  ListTile(
-                    leading: Text(testHarvest1Date),
-                    title: Text(testHarvestNote1),
-                  ),
-                ],
-              ),
-            ),
-            Center(
-              child: Container(
-                child: Row(
-                  children: [
-                    // Left Column: Text Widgets
-                    Expanded(
-                      flex: 1, // Takes half of the available space
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          SizedBox(height: 40),
-                          Text("Notificaciones: Activadas."),
-                          SizedBox(height: defaultTextSpacer),
-                          Text("Notificaciones: Activadas."),
-                          SizedBox(height: defaultTextSpacer),
-                          Text("Notificaciones: Activadas."),
-                          SizedBox(height: defaultTextSpacer),
-                        ],
-                      ),
-                    ),
-                    // Right Column: Card Buttons
-                    Expanded(
-                      flex: 1, // Takes half of the available space
-                      child: Column(
-                        children: [
-                          IconButton.outlined(
-                              onPressed: () {
-                                print("test");
-                              },
-                              icon: Icon(Icons.notification_add)),
-                          SizedBox(height: defaultCardSpacer),
-                          IconButton.outlined(
-                              onPressed: () {
-                                print("test");
-                              },
-                              icon: Icon(Icons.notification_add)),
-                          SizedBox(height: defaultCardSpacer),
-                          IconButton.outlined(
-                              onPressed: () {
-                                print("test");
-                              },
-                              icon: Icon(Icons.notification_add)),
-                          SizedBox(height: defaultCardSpacer),
-                        ],
-                      ),
-                    ),
-                  ],
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton.outlined(
+                    onPressed: () {
+                      print("test");
+                    },
+                    icon: Icon(Icons.notification_add)),
+                IconButton.outlined(
+                    onPressed: () {
+                      print("test");
+                    },
+                    icon: Icon(Icons.notification_add)),
+                IconButton.outlined(
+                    onPressed: () {
+                      print("test");
+                    },
+                    icon: Icon(Icons.notification_add)),
+                SizedBox(
+                  width: 30,
                 ),
-              ),
+                const Text("Recordatorios: cada $testWaterTime1 días"),
+              ],
+            ),
+            Row(
+              children: [
+                Text("Rendimientos: ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text("\$ $testProductProfit1")
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  "Gastos: ",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                Text("\$ $testProductExpense1")
+              ],
+            ),
+            Row(
+              children: [
+                Text("Pre-vendidos: ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text(testProductPreSale1)
+              ],
+            ),
+            Row(
+              children: [
+                Text("Productos listos: ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text(testProductReady1)
+              ],
             ),
           ],
         ),

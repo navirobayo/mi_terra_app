@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
 
-double defaultTextSpacer = 60;
-double defaultCardSpacer = 20;
-
 class ProductsDetailsScreen extends StatelessWidget {
   const ProductsDetailsScreen({super.key});
 
@@ -44,8 +41,9 @@ class ProductsDetailsScreen extends StatelessWidget {
                 const Column(
                   children: [
                     Text("En producción: $testHarvestTime1 días"),
-                    Text("Frecuencia de venta: $testProductSaleFrequency días"),
-                    Text("Plantas/animales: $testNumberOfSeeds"),
+                    Text(
+                        "Producto listo cada: $testProductReadyFrequency días"),
+                    Text("Plantas / animales: $testNumberOfSeeds"),
                   ],
                 ),
               ],
@@ -57,12 +55,12 @@ class ProductsDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       print("test");
                     },
-                    icon: Icon(Icons.notification_add)),
+                    icon: Icon(Icons.app_registration_outlined)),
                 IconButton.outlined(
                     onPressed: () {
                       print("test");
                     },
-                    icon: Icon(Icons.notification_add)),
+                    icon: Icon(Icons.camera_alt_outlined)),
                 IconButton.outlined(
                     onPressed: () {
                       print("test");
@@ -105,6 +103,14 @@ class ProductsDetailsScreen extends StatelessWidget {
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                 Text(testProductReady1)
+              ],
+            ),
+            Row(
+              children: [
+                Text("Ventas totales: ",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text(testProductSales)
               ],
             ),
           ],

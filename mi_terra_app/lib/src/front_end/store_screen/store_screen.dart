@@ -6,114 +6,35 @@ class StoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-                width: 200,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                                "https://as1.ftcdn.net/v2/jpg/00/66/93/76/1000_F_66937645_p9FK0kXiwslUc4Sdxo2xJJIQpsbLFI0u.jpg"),
-                          ),
-                        ),
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+        itemBuilder: (context, index) {
+          return Card(
+            color: Theme.of(context).colorScheme.onBackground,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(10),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            "https://firebasestorage.googleapis.com/v0/b/mi-terra-app.appspot.com/o/terra_database%2FCaptura%20de%20pantalla%202023-12-06%20212051.png?alt=media&token=5c031e59-c48e-4b5c-9aeb-6e0b84c3ca08"),
                       ),
-                      const Text("Acelgas"),
-                      const Text("\$8000 libra. 8 Disponibles"),
-                    ],
+                    ),
                   ),
-                ),
+                  const Text("Espinacas"),
+                  const Text("\$8000 libra. 8 Disponibles"),
+                ],
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text("Editar"),
-                      IconButton(onPressed: null, icon: Icon(Icons.edit)),
-                      Text("Eliminar"),
-                      IconButton(onPressed: null, icon: Icon(Icons.delete)),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-                width: 200,
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 150,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius: BorderRadius.circular(10),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                                "https://as1.ftcdn.net/v2/jpg/06/28/98/30/1000_F_628983007_ot4QbSRTc1RrJMdjSHHyf0VeBMbV5PiC.jpg"),
-                          ),
-                        ),
-                      ),
-                      const Text("Espinacas"),
-                      const Text("\$8000 libra. 8 Disponibles"),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text("Editar"),
-                      IconButton(onPressed: null, icon: Icon(Icons.edit)),
-                      Text("Eliminar"),
-                      IconButton(onPressed: null, icon: Icon(Icons.delete)),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ]),
+            ),
+          );
+        },
+      ),
     );
   }
 }

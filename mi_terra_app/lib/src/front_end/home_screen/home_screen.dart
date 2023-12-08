@@ -40,7 +40,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       appBar: AppBar(
           automaticallyImplyLeading: false,
           title: const Text("Hola, $testUserName"),
@@ -61,32 +60,20 @@ class HomeScreen extends StatelessWidget {
               Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Card(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      clipBehavior: Clip.hardEdge,
-                      elevation: 3,
-                      child: InkWell(
-                        splashColor:
-                            Theme.of(context).colorScheme.onSurfaceVariant,
-                        onTap: () {
+                      padding: const EdgeInsets.all(12),
+                      child: IconButton.outlined(
+                        icon: Icon(Icons.storefront_sharp),
+                        onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const StoreScreen(),
                           ));
                         },
-                        child: const SizedBox(
-                          width: 130,
-                          height: 60,
-                          child: Center(child: Text('Mi Catálogo')),
-                        ),
-                      ),
-                    ),
-                  ),
+                      )),
                   const SizedBox(
-                    width: 30,
+                    width: 160,
                   ),
                   const Text(
-                    "Ganancias:, $testUserGlobalProfit",
+                    "Hola, $testUserName",
                     // style: TextStyle(fontSize: 25),
                   ),
                 ],

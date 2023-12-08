@@ -27,6 +27,7 @@ class RegistrationController extends GetxController {
       "tasks": {"to_do": [], "done": []},
       "inventory": {"in_use": [], "not_used": []},
       "products": [],
+      "catalog": [],
       "profile": {
         "user_bio:": "Cuéntanos más sobre ti o sobre tu empresa",
         "user_location": "Sin dirección física",

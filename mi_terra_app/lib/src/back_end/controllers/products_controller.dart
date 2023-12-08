@@ -13,3 +13,5 @@ class ProductsController extends GetxController {
     }
   }
 }
+
+//* Note: The controller of data needs to have a beggining date, based on that the app should calculate the production time. In this way even if the user changes the beggining date, the same function will calculate how much time is in production (taking into account the actual date)

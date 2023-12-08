@@ -19,3 +19,4 @@ const String testProductPreSale1 = "18";
 const String testProductReady1 = "5";
 const String testProductReadyFrequency = "5";
 const String testProductSales = "50";
+const String testContactName1 = "Francisco";

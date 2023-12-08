@@ -15,14 +15,23 @@ class ProductsScreen extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Nuevo producto"),
+            title: const Text("¿Qué vas a producir?"),
             content: SingleChildScrollView(
               child: Form(
                   key: formKey,
                   child: Column(
                     children: [
                       TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Nombre de tu producto",
+                        ),
                         controller: controller.productName,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Precio",
+                        ),
+                        controller: controller.productPrice,
                       ),
                       TextButton(
                           onPressed: () {
@@ -62,8 +71,9 @@ class ProductsScreen extends StatelessWidget {
                           leading: const Icon(Icons.nature),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  const ProductsDetailsScreen(),
+                              builder: (context) => ProductsDetailsScreen(
+                                  productData:
+                                      productsController.products[index]),
                             ));
                           },
                         );

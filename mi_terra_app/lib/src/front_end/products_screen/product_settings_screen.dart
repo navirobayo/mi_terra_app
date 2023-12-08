@@ -9,10 +9,17 @@ class ProductSettingsScreen extends StatelessWidget {
         body: ListView(
       children: [
         ListTile(
-          title: Text("Modificar nombre del producto"),
+          title: Text("Cambiar nombre"),
         ),
         ListTile(
-          title: Text("Modificar fecha de inicio de producción"),
+          title: Text("Cambiar precio"),
+        ),
+        ListTile(
+          title: Text(
+              "Ver fecha de inicio de este producto"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción.
+        ),
+        ListTile(
+          title: Text("Cambiar precio"),
         ),
       ],
     ));

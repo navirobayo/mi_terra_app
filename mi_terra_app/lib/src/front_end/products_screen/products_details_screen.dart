@@ -1,14 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/product_sale_controller.dart';
+import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
 
 class ProductsDetailsScreen extends StatelessWidget {
-  const ProductsDetailsScreen({super.key});
+  final Map<String, dynamic> productData;
 
+  const ProductsDetailsScreen({Key? key, required this.productData})
+      : super(key: key);
+
+  /* Future<void> TextEditingDeltaNonTextUpdate(BuildContext context) async {
+    final controller = Get.put(ProductSaleController());
+    final formKey = GlobalKey<FormState>();
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("¿Que información quieres cambiar?"),
+            content: SingleChildScrollView(
+              child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            final String productId = productData['product_id'];
+                            controller.saleProduct(productId);
+                            Get.offAll(const HomeScreen());
+                          },
+                          child: const Text("Añadir venta")),
+                      TextButton(
+                          onPressed: () {
+                            null;
+                          },
+                          child: const Text("Otra opción")),
+                    ],
+                  )),
+            ),
+          );
+        });
+  }
+*/
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(testHarvestTitle1), actions: [
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      appBar: AppBar(title: Text(productData['product_name']), actions: [
         IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
@@ -29,21 +68,22 @@ class ProductsDetailsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(10),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://firebasestorage.googleapis.com/v0/b/mi-terra-app.appspot.com/o/terra_database%2FCaptura%20de%20pantalla%202023-12-06%20212051.png?alt=media&token=5c031e59-c48e-4b5c-9aeb-6e0b84c3ca08"),
+                    image: DecorationImage(
+                      image: NetworkImage(productData['product_cover']),
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 30,
                 ),
-                const Column(
+                Column(
                   children: [
-                    Text("En producción: $testHarvestTime1 días"),
+                    Text("\$ ${productData['product_price']}",
+                        style: Theme.of(context).textTheme.headlineLarge),
                     Text(
-                        "Producto listo cada: $testProductReadyFrequency días"),
-                    Text("Plantas / animales: $testNumberOfSeeds"),
+                        "Producto listo cada: ${productData['product_frequency']} días"),
+                    Text(
+                        "Ventas este mes: ${productData['product_monthly_sales']}")
                   ],
                 ),
               ],
@@ -69,15 +109,16 @@ class ProductsDetailsScreen extends StatelessWidget {
                 SizedBox(
                   width: 30,
                 ),
-                const Text("Recordatorios: cada $testWaterTime1 días"),
+                Text(
+                    "Recordatorios: cada ${productData['reminder_frequency']} días"),
               ],
             ),
             Row(
               children: [
-                Text("Rendimientos: ",
+                Text("Ganancias: ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text("\$ $testProductProfit1")
+                Text("\$ ${productData['product_profits']}")
               ],
             ),
             Row(
@@ -86,7 +127,7 @@ class ProductsDetailsScreen extends StatelessWidget {
                   "Gastos: ",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                Text("\$ $testProductExpense1")
+                Text("\$ ${productData['product_expenses']}")
               ],
             ),
             Row(
@@ -94,23 +135,24 @@ class ProductsDetailsScreen extends StatelessWidget {
                 Text("Pre-vendidos: ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text(testProductPreSale1)
+                Text(productData['product_pre_sales'].toString())
               ],
             ),
             Row(
               children: [
-                Text("Productos listos: ",
+                Text("Entregados: ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text(testProductReady1)
+                Text(productData['products_ready'].toString())
               ],
             ),
             Row(
               children: [
-                Text("Ventas totales: ",
+                Text("Disponibles: ",
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text(testProductSales)
+                Text(productData['products_ready']
+                    .toString()) //* Tiene que ser negativo si ya hay prevendidos
               ],
             ),
           ],

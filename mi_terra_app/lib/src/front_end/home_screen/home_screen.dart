@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
@@ -85,14 +86,7 @@ class HomeScreen extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
-              Obx(() => Text(
-                    _controller.connectionType.value == 1
-                        ? "Wifi Connected"
-                        : _controller.connectionType.value == 2
-                            ? 'Mobile Data Connected'
-                            : 'No Internet',
-                    style: const TextStyle(fontSize: 20),
-                  )),
+              ConnectivityWidget(),
               Row(
                 children: [
                   Padding(

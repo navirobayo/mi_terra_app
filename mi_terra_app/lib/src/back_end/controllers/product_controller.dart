@@ -14,6 +14,7 @@ class ProductController extends GetxController {
   Future<void> createProduct() async {
     final productId = const Uuid().v4();
     final productCreation = DateTime.now();
+    final double productPriceValue = double.parse(productPrice.text);
     final Map<String, dynamic> productData = {
       'product_name': productName.text,
       'product_id': productId,
@@ -27,12 +28,14 @@ class ProductController extends GetxController {
       'product_units': 0,
       'products_ready': 0,
       'product_sales': [],
-      'product_price': productPrice.text,
+      'product_price': productPriceValue,
       'product_creation': productCreation,
     };
     try {
       await UserRepository.instance.saveProduct(productData);
+      Get.snackbar('Éxito', 'Producto creado');
     } catch (error) {
+      Get.snackbar('Error', 'No se ha podido crear el producto: $error');
       print("error: $error");
     }
   }

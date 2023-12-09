@@ -28,11 +28,11 @@ class ProductsScreen extends StatelessWidget {
                         controller: productController.productName,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
-                          hintText: "Precio",
-                        ),
-                        controller: productController.productPrice,
-                      ),
+                          decoration: InputDecoration(
+                            hintText: "Precio",
+                          ),
+                          controller: productController.productPrice,
+                          keyboardType: TextInputType.number),
                       TextButton(
                           onPressed: () {
                             productController.createProduct();

@@ -33,7 +33,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter a valid quantity';
+                        return 'Entra una cantidad mínima';
                       }
                       return null;
                     },
@@ -98,8 +98,10 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Text("\$ ${productData['product_price']}",
-                        style: Theme.of(context).textTheme.headlineLarge),
+                    Text(
+                      '\$ ${(productData['product_price'] as double)}',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
                     Text(
                         "Producto listo cada: ${productData['product_frequency']} días"),
                     Text("Plantas / animales: ${productData['product_units']}")
@@ -174,9 +176,6 @@ class ProductDetailsScreen extends StatelessWidget {
                         .headlineMedium) //* Tiene que ser negativo si ya hay prevendidos
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
               clipBehavior: Clip.hardEdge,
@@ -186,7 +185,6 @@ class ProductDetailsScreen extends StatelessWidget {
                 onTap: () {
                   createNewSale(context, productData['product_id'],
                       productData['product_price']);
-                  Get.offAll(const HomeScreen());
                 },
                 child: const SizedBox(
                   height: 60,

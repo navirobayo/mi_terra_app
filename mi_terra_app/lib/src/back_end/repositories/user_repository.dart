@@ -112,15 +112,18 @@ class UserRepository extends GetxController {
       print("User is not authenticated.");
       return;
     }
+
     final userId = user.uid;
     final userDocumentRef = database.collection("users").doc(userId);
     final productId = saleData['product_id'];
+
     try {
+      // Access the product_id field and then the product_sales map to update the specific product with sale information.
       await userDocumentRef.update({
-        "products.$productId": saleData,
+        "products.$productId.product_sales": FieldValue.arrayUnion([saleData]),
       });
     } catch (error) {
-      print("Error saving this product: $error");
+      print("Error guardando esta venta: $error");
       throw error;
     }
   }

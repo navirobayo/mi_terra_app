@@ -40,7 +40,7 @@ class ProductSettingsScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-              "Generar reporte"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción.
+              "Ver / Generar reporte"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción y las unidades vendidas.
         ),
       ],
     ));

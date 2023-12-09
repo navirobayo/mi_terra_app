@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
@@ -62,9 +63,65 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
+  Future<void> createNewExpense(BuildContext context, String productId) async {
+    final ExpenseController expenseController = Get.find<ExpenseController>();
+    final formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nuevo gasto"),
+          content: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Cantidad",
+                    ),
+                    controller: expenseController.expenseQuantity,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa una cantidad mínima';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Precio por unidad",
+                    ),
+                    controller: expenseController.expensePricePerUnit,
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: "Nombre del gasto",
+                    ),
+                    controller: expenseController.expenseItemName,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (formKey.currentState?.validate() ?? false) {
+                        expenseController.createExpense(productData);
+                        Get.offAll(const HomeScreen());
+                      }
+                    },
+                    child: const Text("Añadir gasto"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final SaleController saleController = Get.find<SaleController>();
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(title: Text(productData['product_name']), actions: [
@@ -80,6 +137,9 @@ class ProductDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
+            SizedBox(
+              height: 4,
+            ),
             Row(
               children: [
                 Container(
@@ -102,12 +162,17 @@ class ProductDetailsScreen extends StatelessWidget {
                       '\$ ${(productData['product_price'] as double)}',
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
+                    Text("Plantas / animales: ${productData['product_units']}"),
                     Text(
                         "Producto listo cada: ${productData['product_frequency']} días"),
-                    Text("Plantas / animales: ${productData['product_units']}")
+                    Text(
+                        "Ventas totales: ${productData['product_sales_counter']}"),
                   ],
                 ),
               ],
+            ),
+            SizedBox(
+              height: 6,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,54 +192,54 @@ class ProductDetailsScreen extends StatelessWidget {
                       print("test");
                     },
                     icon: Icon(Icons.qr_code_2_outlined)),
-                SizedBox(
-                  width: 30,
-                ),
               ],
             ),
-            SizedBox(
-              height: 30,
-            ),
-            Row(
-              children: [
-                Text("Ganancias: ",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text("\$ ${productData['product_profits']}",
-                    style: Theme.of(context).textTheme.headlineMedium)
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "Gastos: ",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                Text("\$ ${productData['product_expenses']}",
-                    style: Theme.of(context).textTheme.headlineMedium)
-              ],
-            ),
-            Row(
-              children: [
-                Text("Disponibles: ",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text(productData['products_ready'].toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium) //* Tiene que ser negativo si ya hay prevendidos
-              ],
-            ),
-            Row(
-              children: [
-                Text("Ventas totales: ",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-                Text("Number of sales",
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium) //* Tiene que ser negativo si ya hay prevendidos
-              ],
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text("Ventas: ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Text("\$ ${productData['product_sales_net_value']}",
+                          style: Theme.of(context).textTheme.headlineMedium)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Ganancias: ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Text("\$ ${productData['product_profits']}",
+                          style: Theme.of(context).textTheme.headlineMedium)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Gastos: ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      Text("\$ ${productData['product_spent_net_value']}",
+                          style: Theme.of(context).textTheme.headlineMedium)
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text("Disponibles: ",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20)),
+                      Text(productData['products_ready'].toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium) //* Tiene que ser negativo si ya hay prevendidos
+                    ],
+                  ),
+                ],
+              ),
             ),
             Card(
               color: Theme.of(context).colorScheme.primaryContainer,
@@ -202,7 +267,10 @@ class ProductDetailsScreen extends StatelessWidget {
               child: InkWell(
                 splashColor: Theme.of(context).colorScheme.onSurfaceVariant,
                 onTap: () {
-                  null;
+                  createNewExpense(
+                    context,
+                    productData['product_id'],
+                  );
                 },
                 child: const SizedBox(
                   height: 60,

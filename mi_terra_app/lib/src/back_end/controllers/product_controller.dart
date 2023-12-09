@@ -9,8 +9,6 @@ class ProductController extends GetxController {
   TextEditingController productName = TextEditingController();
   TextEditingController productPrice = TextEditingController();
 
-  //! To do: Add snackbar confirming the creation of the new product.
-
   Future<void> createProduct() async {
     final productId = const Uuid().v4();
     final productCreation = DateTime.now();
@@ -18,7 +16,7 @@ class ProductController extends GetxController {
     final Map<String, dynamic> productData = {
       'product_name': productName.text,
       'product_id': productId,
-      'product_expenses': 0,
+      'product_expenses': [],
       'product_notes': [],
       'product_profits': 0,
       'product_images': [],
@@ -30,6 +28,9 @@ class ProductController extends GetxController {
       'product_sales': [],
       'product_price': productPriceValue,
       'product_creation': productCreation,
+      'product_sales_counter': 0,
+      'product_sales_net_value': 0,
+      'product_spent_net_value': 0
     };
     try {
       await UserRepository.instance.saveProduct(productData);

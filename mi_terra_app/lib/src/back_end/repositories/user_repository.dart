@@ -117,10 +117,39 @@ class UserRepository extends GetxController {
     final userDocumentRef = database.collection("users").doc(userId);
     final productId = saleData['product_id'];
     final saleId = saleData['sale_id'];
+    final double totalSale = saleData['total_sale'] as double;
 
     try {
       await userDocumentRef.update({
         "products.$productId.product_sales.$saleId": saleData,
+        "products.$productId.product_sales_counter": FieldValue.increment(1),
+        "products.$productId.product_sales_net_value":
+            FieldValue.increment(totalSale),
+      });
+    } catch (error) {
+      print("Error guardando esta venta: $error");
+      throw error;
+    }
+  }
+
+  Future<void> saveExpense(Map<String, dynamic> expenseData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final productId = expenseData['product_id'];
+    final saleId = expenseData['expense_id'];
+    final double totalSpent = expenseData['total_spent'] as double;
+
+    try {
+      await userDocumentRef.update({
+        "products.$productId.product_expenses.$saleId": expenseData,
+        "products.$productId.product_spent_net_value":
+            FieldValue.increment(totalSpent),
       });
     } catch (error) {
       print("Error guardando esta venta: $error");

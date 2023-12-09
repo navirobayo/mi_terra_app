@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_details_screen.dart';
 

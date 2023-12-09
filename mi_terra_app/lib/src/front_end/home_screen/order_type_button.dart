@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_terra_app/src/back_end/controllers/button_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 
 class RadioButtonWidget extends StatelessWidget {
   final String value;

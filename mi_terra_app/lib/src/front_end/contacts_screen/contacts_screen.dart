@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/contact_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/contacts_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contact_details_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 

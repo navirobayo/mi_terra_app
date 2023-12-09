@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
-import 'package:mi_terra_app/src/back_end/controllers/button_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
@@ -64,6 +65,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ConnectionManagerController _controller =
+        Get.find<ConnectionManagerController>();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -82,6 +85,14 @@ class HomeScreen extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
+              Obx(() => Text(
+                    _controller.connectionType.value == 1
+                        ? "Wifi Connected"
+                        : _controller.connectionType.value == 2
+                            ? 'Mobile Data Connected'
+                            : 'No Internet',
+                    style: const TextStyle(fontSize: 20),
+                  )),
               Row(
                 children: [
                   Padding(

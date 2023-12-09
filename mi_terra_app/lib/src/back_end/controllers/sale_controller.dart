@@ -29,10 +29,10 @@ class SaleController extends GetxController {
 
     try {
       await UserRepository.instance.saveSale(saleData);
-      Get.snackbar('Éxito', 'Nueva venta añadida');
+      Get.snackbar('Felicidades!', 'Nueva venta añadida');
     } catch (error) {
       print('Error creating sale: $error');
-      Get.snackbar('Error', 'No se ha podido guardar la venta: $error');
+      Get.snackbar('Ups', 'No se ha podido guardar la venta: $error');
     }
   }
 }

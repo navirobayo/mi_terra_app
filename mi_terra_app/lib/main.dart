@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mi_terra_app/src/back_end/controllers/button_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/contacts_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/network_binding.dart';
+import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
-import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'src/private/firebase_options.dart';
 
@@ -42,6 +43,7 @@ Future<void> initializeDependencies() async {
   Get.put(ContactsController());
   Get.put(ButtonController());
   Get.put(SaleController());
+  Get.put(ExpenseController());
 }
 
 // The main function of the app.
@@ -61,6 +63,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: ControllerBinding(),
       title: 'Mi Terra App 1.0.0',
       theme: FlutterMiTerraTheme.lightTheme,
       defaultTransition: Transition.leftToRightWithFade,

@@ -116,11 +116,11 @@ class UserRepository extends GetxController {
     final userId = user.uid;
     final userDocumentRef = database.collection("users").doc(userId);
     final productId = saleData['product_id'];
+    final saleId = saleData['sale_id'];
 
     try {
-      // Access the product_id field and then the product_sales map to update the specific product with sale information.
       await userDocumentRef.update({
-        "products.$productId.product_sales": FieldValue.arrayUnion([saleData]),
+        "products.$productId.product_sales.$saleId": saleData,
       });
     } catch (error) {
       print("Error guardando esta venta: $error");

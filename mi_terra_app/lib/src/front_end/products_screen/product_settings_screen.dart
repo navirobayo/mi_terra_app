@@ -42,6 +42,9 @@ class ProductSettingsScreen extends StatelessWidget {
           title: Text(
               "Ver / Generar reporte"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción y las unidades vendidas.
         ),
+        ListTile(
+          title: Text("Eliminar producto permanentemente"),
+        ),
       ],
     ));
   }

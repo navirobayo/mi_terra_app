@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/button_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/contacts_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
@@ -34,6 +38,10 @@ Future<void> initializeDependencies() async {
   Get.put(AuthenticationRepository());
   Get.put(UserRepository());
   Get.put(ProductsController());
+  Get.put(ProductController());
+  Get.put(ContactsController());
+  Get.put(ButtonController());
+  Get.put(SaleController());
 }
 
 // The main function of the app.

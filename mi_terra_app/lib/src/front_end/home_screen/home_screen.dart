@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/back_end/controllers/button_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart';
+import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
@@ -10,32 +14,52 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   void addNewExpense(BuildContext context) {
+    final ButtonController buttonController = Get.find<ButtonController>();
+    final ProductsController productsController =
+        Get.find<ProductsController>();
+    final List<String> productNames = productsController.products
+        .map<String>((product) => product['product_name'] as String)
+        .toList();
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Nuevo gasto"),
-            content: SingleChildScrollView(
-                child: ListBody(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nuevo gasto"),
+          content: SingleChildScrollView(
+            child: ListBody(
               children: [
-                const SizedBox(
-                  height: 20,
+                // Dynamically build radio buttons for user products
+                for (var productName in productNames)
+                  RadioButtonWidget(
+                    value: productName,
+                    title: productName,
+                  ),
+                // Add "Gasto general" option
+                RadioButtonWidget(
+                  value: 'Gasto general',
+                  title: 'Gasto general',
                 ),
+                const SizedBox(height: 20),
                 GestureDetector(
                   child: const Text("Añadir"),
-                  onTap: () {},
+                  onTap: () {
+                    // Handle the logic when "Añadir" is tapped
+                    print("Selected order type: ${buttonController.orderType}");
+                  },
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 GestureDetector(
                   child: const Text("Cancelar"),
-                  onTap: () {},
-                )
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
               ],
-            )),
-          );
-        });
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override

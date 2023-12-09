@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/products_controller.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
-import 'package:mi_terra_app/src/front_end/products_screen/products_details_screen.dart';
+import 'package:mi_terra_app/src/front_end/products_screen/product_details_screen.dart';
 
 class ProductsScreen extends StatelessWidget {
   const ProductsScreen({super.key});
 
   Future<void> createNewProduct(BuildContext context) async {
-    final controller = Get.put(ProductController());
+    final ProductController productController = Get.find<ProductController>();
     final formKey = GlobalKey<FormState>();
     showDialog(
         context: context,
@@ -25,17 +25,17 @@ class ProductsScreen extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: "Nombre de tu producto",
                         ),
-                        controller: controller.productName,
+                        controller: productController.productName,
                       ),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Precio",
                         ),
-                        controller: controller.productPrice,
+                        controller: productController.productPrice,
                       ),
                       TextButton(
                           onPressed: () {
-                            controller.createProduct();
+                            productController.createProduct();
                             Get.offAll(const HomeScreen());
                           },
                           child: const Text("Crear producto")),
@@ -71,7 +71,7 @@ class ProductsScreen extends StatelessWidget {
                           leading: const Icon(Icons.nature),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ProductsDetailsScreen(
+                              builder: (context) => ProductDetailsScreen(
                                   productData:
                                       productsController.products[index]),
                             ));

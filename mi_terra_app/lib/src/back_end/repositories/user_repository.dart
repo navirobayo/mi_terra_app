@@ -64,4 +64,83 @@ class UserRepository extends GetxController {
 
     return productList;
   }
+
+  Future<void> saveContact(Map<String, dynamic> contactData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final contactId = contactData['contact_id'];
+    try {
+      await userDocumentRef.update({
+        "contacts.$contactId": contactData,
+      });
+    } catch (error) {
+      print("Error saving this contact: $error");
+      throw error;
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getUserContacts() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    final userData = await userDocumentRef.get();
+    final contacts = userData.data()?['contacts'] ?? {};
+
+    // Convert contacts map to a list
+    List<Map<String, dynamic>> contactsList = [];
+    contacts.forEach((key, value) {
+      contactsList.add(value);
+    });
+
+    return contactsList;
+  }
+
+  Future<void> saveSale(Map<String, dynamic> saleData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final productId = saleData['product_id'];
+    try {
+      await userDocumentRef.update({
+        "products.$productId": saleData,
+      });
+    } catch (error) {
+      print("Error saving this product: $error");
+      throw error;
+    }
+  }
+
+  Future<void> saveGlobal(Map<String, dynamic> globalData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final globalId = globalData['global_id'];
+    try {
+      await userDocumentRef.update({
+        "global_object.$globalId": globalData,
+      });
+    } catch (error) {
+      print("Error saving this global information: $error");
+      throw error;
+    }
+  }
 }

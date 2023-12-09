@@ -23,6 +23,7 @@ class RegistrationController extends GetxController {
     final Map<String, dynamic> userDocument = {
       "global_expenses": 0,
       "global_profits": 0,
+      "global_object": [],
       "contacts": [],
       "tasks": {"to_do": [], "done": []},
       "inventory": {"in_use": [], "not_used": []},

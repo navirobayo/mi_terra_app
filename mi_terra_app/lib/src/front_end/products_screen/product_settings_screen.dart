@@ -15,11 +15,32 @@ class ProductSettingsScreen extends StatelessWidget {
           title: Text("Cambiar precio"),
         ),
         ListTile(
-          title: Text(
-              "Ver fecha de inicio de este producto"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción.
+          title: Text("Actualizar número de plantas / animales"),
         ),
         ListTile(
-          title: Text("Cambiar precio"),
+          title: Text("Actualizar frecuencia de producción"),
+        ),
+        ListTile(
+          title: Text("Ver histórico de gastos"),
+        ),
+        ListTile(
+          title: Text("Ver histórico de ventas"),
+        ),
+        ListTile(
+          title: Text("Modificar ganancias"),
+        ),
+        ListTile(
+          title: Text("Modificar gastos"),
+        ),
+        ListTile(
+          title: Text("Modificar ventas totales"),
+        ),
+        ListTile(
+          title: Text("Publicar en catálogo virtual"),
+        ),
+        ListTile(
+          title: Text(
+              "Generar reporte"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción.
         ),
       ],
     ));

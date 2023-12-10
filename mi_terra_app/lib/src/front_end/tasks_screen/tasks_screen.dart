@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
-
-import '../home_screen/home_screen.dart';
+import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
+import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 
 enum TaskStatus { pending, completed }
 
@@ -49,9 +49,19 @@ class _TasksScreenState extends State<TasksScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      final tasksController = Get.find<TasksController>();
+      tasksController.pendingTasks
+          .assignAll(await UserRepository.instance.loadPendingTasks());
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
@@ -74,13 +84,31 @@ class _TasksScreenState extends State<TasksScreen> {
               },
             ),
           ),
+          Expanded(
+            child: Obx(() {
+              final tasksController = Get.find<TasksController>();
+              final List<String> tasks = selectedStatus == TaskStatus.pending
+                  ? tasksController.pendingTasks
+                  : []; // Use only pending tasks for "Pendientes" tab
+              return ListView.builder(
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    trailing: const ElevatedButton(
+                        onPressed: null, child: Icon(Icons.done)),
+                    title: Text(tasks[index]),
+                  );
+                },
+              );
+            }),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             createNewTask(context);
           },
-          child: Icon(Icons.add)),
+          child: const Icon(Icons.add)),
     );
   }
 }

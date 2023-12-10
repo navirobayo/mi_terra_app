@@ -178,6 +178,27 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<List<String>> loadPendingTasks() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      final userData = await userDocumentRef.get();
+      final List<dynamic> tasks = userData['tasks.to_do'];
+      return tasks.map((task) => task.toString()).toList();
+    } catch (error) {
+      print("Error loading tasks: $error");
+      throw error;
+    }
+  }
+
   Future<void> saveGlobal(Map<String, dynamic> globalData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

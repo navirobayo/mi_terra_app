@@ -7,11 +7,13 @@ class TasksController extends GetxController {
 
   TextEditingController taskNote = TextEditingController();
 
+  RxList<String> pendingTasks = <String>[].obs;
+
   Future<void> createTask() async {
     final String taskNoteValue = taskNote.text;
     try {
       await UserRepository.instance.saveTask(taskNoteValue);
-      Get.snackbar('Listo', 'Nueva tarea añadida');
+      Get.snackbar('Perfecto', 'Nueva tarea añadida');
     } catch (error) {
       Get.snackbar('Ups', 'No se ha podido guardar esta tarea: $error');
       print("error: $error");

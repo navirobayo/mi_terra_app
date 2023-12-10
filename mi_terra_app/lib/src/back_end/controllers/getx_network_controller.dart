@@ -1,13 +1,13 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ConnectionManagerController extends GetxController {
-  //0 = No Internet, 1 = WIFI Connected ,2 = Mobile Data Connected.
+  // 0 = No Internet, 1 = WIFI Connected, 2 = Mobile Data Connected.
   var connectionType = 0.obs;
+  var lastSyncDateTime = DateTime.now().obs;
 
   final Connectivity _connectivity = Connectivity();
 
@@ -40,7 +40,6 @@ class ConnectionManagerController extends GetxController {
         break;
       case ConnectivityResult.mobile:
         connectionType.value = 2;
-
         break;
       case ConnectivityResult.none:
         connectionType.value = 0;
@@ -49,6 +48,9 @@ class ConnectionManagerController extends GetxController {
         print("Error");
         break;
     }
+
+    // Update the lastSyncDateTime whenever the connectivity changes
+    lastSyncDateTime.value = DateTime.now();
   }
 
   @override

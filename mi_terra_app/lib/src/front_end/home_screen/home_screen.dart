@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                     title: productName,
                   ),
                 // Add "Gasto general" option
-                RadioButtonWidget(
+                const RadioButtonWidget(
                   value: 'Gasto general',
                   title: 'Gasto general',
                 ),
@@ -86,13 +86,12 @@ class HomeScreen extends StatelessWidget {
         child: Center(
           child: ListView(
             children: [
-              ConnectivityWidget(),
               Row(
                 children: [
                   Padding(
                       padding: const EdgeInsets.all(12),
                       child: IconButton.outlined(
-                        icon: Icon(Icons.storefront_sharp),
+                        icon: const Icon(Icons.storefront_sharp),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const StoreScreen(),
@@ -101,8 +100,11 @@ class HomeScreen extends StatelessWidget {
                       )),
                   const Text(
                     "Mi tienda",
-                    // style: TextStyle(fontSize: 25),
                   ),
+                  const SizedBox(
+                    width: 100,
+                  ),
+                  ConnectivityWidget()
                 ],
               ),
               Row(

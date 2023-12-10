@@ -16,16 +16,16 @@ class ConnectivityWidget extends StatelessWidget {
           Container(
             width: 90,
             child: Text(
-              _controller.connectionType.value == 1
+              _controller.connectionType.value == 1 ||
+                      _controller.connectionType.value == 2
                   ? 'Conectado'
-                  : _controller.connectionType.value == 2
-                      ? 'Conectado'
-                      : 'Última conexión: ${_formatDateTime(_controller.lastSyncDateTime.value)}',
+                  : 'Última conexión: ${_formatDateTime(_controller.lastSyncDateTime.value)}',
             ),
           ),
           Icon(
             Icons.wifi,
-            color: _controller.connectionType.value == 1
+            color: (_controller.connectionType.value == 1 ||
+                    _controller.connectionType.value == 2)
                 ? Theme.of(context).colorScheme.primary
                 : Colors.redAccent,
           ),

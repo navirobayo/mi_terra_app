@@ -157,6 +157,27 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> saveTask(String taskNote) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        "tasks.to_do": FieldValue.arrayUnion([taskNote]),
+      });
+    } catch (error) {
+      print("Error saving this task: $error");
+      throw error;
+    }
+  }
+
   Future<void> saveGlobal(Map<String, dynamic> globalData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

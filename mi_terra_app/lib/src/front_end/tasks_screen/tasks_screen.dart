@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
+
+import '../home_screen/home_screen.dart';
 
 enum TaskStatus { pending, completed }
 
@@ -12,6 +16,37 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   bool? isChecked = false;
   TaskStatus selectedStatus = TaskStatus.pending;
+  Future<void> createNewTask(BuildContext context) async {
+    final TasksController tasksController = Get.find<TasksController>();
+    final formKey = GlobalKey<FormState>();
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Por hacer"),
+            content: SingleChildScrollView(
+              child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: "Nueva tarea pendiente",
+                        ),
+                        controller: tasksController.taskNote,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            tasksController.createTask();
+                            Get.offAll(const HomeScreen());
+                          },
+                          child: const Text("Crear tarea")),
+                    ],
+                  )),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +59,11 @@ class _TasksScreenState extends State<TasksScreen> {
               segments: const <ButtonSegment<TaskStatus>>[
                 ButtonSegment<TaskStatus>(
                   value: TaskStatus.pending,
-                  label: Text('Pending'),
+                  label: Text('Pendiente'),
                 ),
                 ButtonSegment<TaskStatus>(
                   value: TaskStatus.completed,
-                  label: Text('Completed'),
+                  label: Text('Completado'),
                 ),
               ],
               selected: <TaskStatus>{selectedStatus},
@@ -41,8 +76,11 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
         ],
       ),
-      floatingActionButton:
-          const FloatingActionButton(onPressed: null, child: Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            createNewTask(context);
+          },
+          child: Icon(Icons.add)),
     );
   }
 }

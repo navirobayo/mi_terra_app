@@ -133,7 +133,7 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const TasksScreen(),
+                          builder: (context) => TasksScreen(),
                         ));
                       },
                       child: const SizedBox(

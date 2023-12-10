@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/network_binding.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
@@ -44,6 +46,8 @@ Future<void> initializeDependencies() async {
   Get.put(ButtonController());
   Get.put(SaleController());
   Get.put(ExpenseController());
+  Get.put(TasksController());
+  Get.put(ConnectionManagerController());
 }
 
 // The main function of the app.

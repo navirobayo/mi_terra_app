@@ -22,13 +22,13 @@ class ProductsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Nombre de tu producto",
                         ),
                         controller: productController.productName,
                       ),
                       TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Precio",
                           ),
                           controller: productController.productPrice,

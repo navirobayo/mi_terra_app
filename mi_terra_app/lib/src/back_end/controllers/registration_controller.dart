@@ -25,7 +25,7 @@ class RegistrationController extends GetxController {
       "global_profits": 0,
       "global_object": [],
       "contacts": [],
-      "tasks": {"to_do": [], "done": []},
+      "tasks": {"to_do": [], "completed": []},
       "inventory": {"in_use": [], "not_used": []},
       "products": [],
       "catalog": [],

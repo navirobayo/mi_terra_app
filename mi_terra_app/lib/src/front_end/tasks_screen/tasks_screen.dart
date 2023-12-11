@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
-import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 
 enum TaskStatus { pending, completed }
@@ -14,8 +13,8 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  bool? isChecked = false;
   TaskStatus selectedStatus = TaskStatus.pending;
+
   Future<void> createNewTask(BuildContext context) async {
     final TasksController tasksController = Get.find<TasksController>();
     final formKey = GlobalKey<FormState>();
@@ -51,10 +50,13 @@ class _TasksScreenState extends State<TasksScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       final tasksController = Get.find<TasksController>();
-      tasksController.pendingTasks
-          .assignAll(await UserRepository.instance.loadPendingTasks());
+      if (selectedStatus == TaskStatus.pending) {
+        await tasksController.loadPendingTasks();
+      } else {
+        await tasksController.loadCompletedTasks();
+      }
     });
   }
 
@@ -89,14 +91,46 @@ class _TasksScreenState extends State<TasksScreen> {
               final tasksController = Get.find<TasksController>();
               final List<String> tasks = selectedStatus == TaskStatus.pending
                   ? tasksController.pendingTasks
-                  : []; // Use only pending tasks for "Pendientes" tab
+                  : tasksController.completedTasks;
+
               return ListView.builder(
                 itemCount: tasks.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    trailing: const ElevatedButton(
-                        onPressed: null, child: Icon(Icons.done)),
                     title: Text(tasks[index]),
+                    trailing: selectedStatus == TaskStatus.pending
+                        ? ElevatedButton(
+                            onPressed: () {
+                              tasksController.completeTask(index);
+                            },
+                            child: const Icon(Icons.done),
+                          )
+                        : const SizedBox.shrink(),
+                    onLongPress: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text("Eliminar tarea"),
+                              content: Text("¿Eliminar permanentemente?"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("Cancel"),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      tasksController.deleteTask(
+                                          index, selectedStatus);
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("Eliminar"))
+                              ],
+                            );
+                          });
+                    },
                   );
                 },
               );

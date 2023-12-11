@@ -199,6 +199,70 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> completeTask(String taskNote) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        "tasks.to_do": FieldValue.arrayRemove([taskNote]),
+        "tasks.completed": FieldValue.arrayUnion([taskNote]),
+      });
+    } catch (error) {
+      print("Error marking task as completed: $error");
+      throw error;
+    }
+  }
+
+  Future<List<String>> loadCompletedTasks() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      final userData = await userDocumentRef.get();
+      final List<dynamic> tasks = userData['tasks.completed'];
+      return tasks.map((task) => task.toString()).toList();
+    } catch (error) {
+      print("Error loading completed tasks: $error");
+      throw error;
+    }
+  }
+
+  Future<void> updateTasks(String fieldName, List<String> updatedTasks) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        fieldName: updatedTasks.map((task) => FieldValue.arrayUnion([task])),
+      });
+    } catch (error) {
+      print("Error updating tasks: $error");
+      throw error;
+    }
+  }
+
   Future<void> saveGlobal(Map<String, dynamic> globalData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

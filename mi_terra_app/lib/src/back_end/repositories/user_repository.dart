@@ -263,6 +263,112 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> movePendingItem(String movedItem) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        "inventory.not_used": FieldValue.arrayRemove([movedItem]),
+        "inventory.in_use": FieldValue.arrayUnion([movedItem]),
+      });
+    } catch (error) {
+      print("Error saving inventory item: $error");
+      throw error;
+    }
+  }
+
+  Future<void> saveItem(String itemNameValue) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        "inventory.not_used": FieldValue.arrayUnion([itemNameValue]),
+      });
+    } catch (error) {
+      print("Error saving this task: $error");
+      throw error;
+    }
+  }
+
+  Future<List<String>> loadNotUsedItems() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      final userData = await userDocumentRef.get();
+      final List<dynamic> items = userData['inventory.not_used'];
+      return items.map((task) => items.toString()).toList();
+    } catch (error) {
+      print("Error loading items: $error");
+      throw error;
+    }
+  }
+
+  Future<List<String>> loadUsedItems() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      final userData = await userDocumentRef.get();
+      final List<dynamic> items = userData['inventory.in_use'];
+      return items.map((task) => task.toString()).toList();
+    } catch (error) {
+      print("Error loading used items: $error");
+      throw error;
+    }
+  }
+
+  Future<void> updateItems(String fieldName, List<String> updatedItems) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef =
+        FirebaseFirestore.instance.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        fieldName: updatedItems.map((item) => FieldValue.arrayUnion([item])),
+      });
+    } catch (error) {
+      print("Error updating item: $error");
+      throw error;
+    }
+  }
+
   Future<void> saveGlobal(Map<String, dynamic> globalData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

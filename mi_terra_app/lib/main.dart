@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/inventory_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/network_binding.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
@@ -48,6 +49,7 @@ Future<void> initializeDependencies() async {
   Get.put(ExpenseController());
   Get.put(TasksController());
   Get.put(ConnectionManagerController());
+  Get.put(InventoryController());
 }
 
 // The main function of the app.

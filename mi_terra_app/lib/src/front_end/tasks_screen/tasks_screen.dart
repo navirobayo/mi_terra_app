@@ -111,14 +111,13 @@ class _TasksScreenState extends State<TasksScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text("Eliminar tarea"),
-                              content: Text("¿Eliminar permanentemente?"),
+                              title: const Text("¿Eliminar?"),
                               actions: [
                                 TextButton(
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text("Cancel"),
+                                  child: const Text("Cancelar"),
                                 ),
                                 TextButton(
                                     onPressed: () {
@@ -126,7 +125,8 @@ class _TasksScreenState extends State<TasksScreen> {
                                           index, selectedStatus);
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text("Eliminar"))
+                                    child:
+                                        const Text("Eliminar permanentemente"))
                               ],
                             );
                           });

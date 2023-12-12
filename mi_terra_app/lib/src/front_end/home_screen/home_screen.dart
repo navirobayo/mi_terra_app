@@ -7,6 +7,7 @@ import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.da
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
+import 'package:mi_terra_app/src/front_end/inventory_screen/inventory_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
@@ -115,7 +116,11 @@ class HomeScreen extends StatelessWidget {
                     elevation: 3,
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.primary,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => InventoryScreen(),
+                        ));
+                      },
                       child: const SizedBox(
                         width: 150,
                         height: 150,

@@ -23,7 +23,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Elementos sin usar"),
+            title: const Text("Agregar item"),
             content: SingleChildScrollView(
               child: Form(
                   key: formKey,
@@ -31,7 +31,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     children: [
                       TextFormField(
                         decoration: const InputDecoration(
-                          hintText: "Agregar elemento",
+                          hintText: "Elementos sin usar",
                         ),
                         controller: inventoryController.itemName,
                       ),
@@ -57,13 +57,13 @@ class _InventoryScreenState extends State<InventoryScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Ubicación del elemento"),
+          title: const Text("Elemento en uso"),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: "¿Donde esás utilizando",
+                    hintText: "¿Donde lo/la estás utilizando?",
                   ),
                   controller: locationController,
                 ),

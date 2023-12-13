@@ -118,6 +118,7 @@ class UserRepository extends GetxController {
     final productId = saleData['product_id'];
     final saleId = saleData['sale_id'];
     final double totalSale = saleData['total_sale'] as double;
+    final double soldUnits = saleData['product_quantity'] as double;
 
     try {
       await userDocumentRef.update({
@@ -125,7 +126,9 @@ class UserRepository extends GetxController {
         "products.$productId.product_sales_counter": FieldValue.increment(1),
         "products.$productId.product_sales_net_value":
             FieldValue.increment(totalSale),
+        "products.$productId.products_ready": FieldValue.increment(-soldUnits),
       });
+      await updateProductProfits(productId);
     } catch (error) {
       print("Error guardando esta venta: $error");
       throw error;
@@ -151,6 +154,7 @@ class UserRepository extends GetxController {
         "products.$productId.product_spent_net_value":
             FieldValue.increment(totalSpent),
       });
+      await updateProductProfits(productId);
     } catch (error) {
       print("Error guardando esta venta: $error");
       throw error;
@@ -369,6 +373,70 @@ class UserRepository extends GetxController {
     } catch (error) {
       print("Error updating item: $error");
       throw error;
+    }
+  }
+
+  Future<void> saveUnitsQuantity(Map<String, dynamic> unitData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final productId = unitData['product_id'];
+    final double totalUnits = unitData['unit_quantity'] as double;
+
+    try {
+      await userDocumentRef.update({
+        "products.$productId.products_ready": FieldValue.increment(totalUnits),
+      });
+    } catch (error) {
+      print("Error añadiendo unidades : $error");
+      throw error;
+    }
+  }
+
+  Future<void> updateProductProfits(String productId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    try {
+      final DocumentSnapshot userSnapshot = await userDocumentRef.get();
+
+      final Map<String, dynamic>? userData =
+          userSnapshot.data() as Map<String, dynamic>?;
+
+      final Map<String, dynamic>? productsData =
+          userData?["products"] as Map<String, dynamic>?;
+
+      final Map<String, dynamic> productData =
+          productsData?[productId] as Map<String, dynamic>? ?? {};
+
+      final double salesNetValue =
+          (productData['product_sales_net_value'] ?? 0).toDouble();
+      final double spentNetValue =
+          (productData['product_spent_net_value'] ?? 0).toDouble();
+
+      final double profits = salesNetValue - spentNetValue;
+
+      print("Calculated Profits for $productId: $profits");
+
+      // Update product_profits
+      await userDocumentRef.update({
+        "products.$productId.product_profits": profits,
+      });
+
+      print("Updated product_profits for $productId");
+    } catch (error) {
+      print("Error updating product profits: $error");
     }
   }
 

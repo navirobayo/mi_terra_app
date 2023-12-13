@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/product_units_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
@@ -49,6 +50,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
                         saleController.createSale(productData);
+                        //Then calculate the profits.
                         Get.offAll(const HomeScreen());
                       }
                     },
@@ -106,6 +108,54 @@ class ProductDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       if (formKey.currentState?.validate() ?? false) {
                         expenseController.createExpense(productData);
+                        // Then. Execute the calculation of profits here.
+                        Get.offAll(const HomeScreen());
+                      }
+                    },
+                    child: const Text("Añadir gasto"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> addNewAvailableProduct(
+      BuildContext context, String productId) async {
+    final ProductUnitsController productUnitsController =
+        Get.find<ProductUnitsController>();
+    final formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nuevo gasto"),
+          content: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Cantidad",
+                    ),
+                    controller: productUnitsController.productQuantity,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa una cantidad mínima';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (formKey.currentState?.validate() ?? false) {
+                        productUnitsController.addUnit(productData);
                         Get.offAll(const HomeScreen());
                       }
                     },
@@ -288,7 +338,10 @@ class ProductDetailsScreen extends StatelessWidget {
               child: InkWell(
                 splashColor: Theme.of(context).colorScheme.onSurfaceVariant,
                 onTap: () {
-                  null;
+                  addNewAvailableProduct(
+                    context,
+                    productData['product_id'],
+                  );
                 },
                 child: const SizedBox(
                   height: 60,

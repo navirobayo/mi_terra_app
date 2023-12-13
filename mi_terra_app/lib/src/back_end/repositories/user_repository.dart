@@ -263,7 +263,7 @@ class UserRepository extends GetxController {
     }
   }
 
-  Future<void> movePendingItem(String movedItem) async {
+  Future<void> movePendingItem(String movedItem, String location) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       print("User is not authenticated.");
@@ -276,8 +276,11 @@ class UserRepository extends GetxController {
 
     try {
       await userDocumentRef.update({
+        // Modify the "inventory.in_use" map to include the item name and its location
+        "inventory.in_use": {
+          movedItem: {"location": location}
+        },
         "inventory.not_used": FieldValue.arrayRemove([movedItem]),
-        "inventory.in_use": FieldValue.arrayUnion([movedItem]),
       });
     } catch (error) {
       print("Error saving inventory item: $error");
@@ -320,7 +323,7 @@ class UserRepository extends GetxController {
     try {
       final userData = await userDocumentRef.get();
       final List<dynamic> items = userData['inventory.not_used'];
-      return items.map((task) => items.toString()).toList();
+      return items.map((item) => item.toString()).toList();
     } catch (error) {
       print("Error loading items: $error");
       throw error;
@@ -341,7 +344,7 @@ class UserRepository extends GetxController {
     try {
       final userData = await userDocumentRef.get();
       final List<dynamic> items = userData['inventory.in_use'];
-      return items.map((task) => task.toString()).toList();
+      return items.map((item) => item.toString()).toList();
     } catch (error) {
       print("Error loading used items: $error");
       throw error;

@@ -23,7 +23,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text("Por hacer"),
+            title: const Text("Elementos sin usar"),
             content: SingleChildScrollView(
               child: Form(
                   key: formKey,
@@ -31,7 +31,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     children: [
                       TextFormField(
                         decoration: const InputDecoration(
-                          hintText: "Nueva tarea pendiente",
+                          hintText: "Agregar elemento",
                         ),
                         controller: inventoryController.itemName,
                       ),
@@ -40,12 +40,49 @@ class _InventoryScreenState extends State<InventoryScreen> {
                             inventoryController.createItem();
                             Get.offAll(const HomeScreen());
                           },
-                          child: const Text("Crear tarea")),
+                          child: const Text("Crear item")),
                     ],
                   )),
             ),
           );
         });
+  }
+
+  void handleElevatedButton(BuildContext context, int index) {
+    final InventoryController inventoryController =
+        Get.find<InventoryController>();
+    final TextEditingController locationController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Ubicación del elemento"),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "¿Donde esás utilizando",
+                  ),
+                  controller: locationController,
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (locationController.text.isNotEmpty) {
+                      inventoryController.moveToUsedItems(
+                          index, locationController.text);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text("Aceptar"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -102,7 +139,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                     trailing: selectedStatus == ItemStatus.pending
                         ? ElevatedButton(
                             onPressed: () {
-                              inventoryController.moveToUsedItems(index);
+                              handleElevatedButton(context, index);
                             },
                             child: const Icon(Icons.done),
                           )

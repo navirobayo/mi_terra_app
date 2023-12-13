@@ -22,12 +22,12 @@ class InventoryController extends GetxController {
     }
   }
 
-  void moveToUsedItems(int index) {
+  void moveToUsedItems(int index, String location) {
     final String movedItem = pendingItems[index];
     usedItems.add(movedItem);
     pendingItems.removeAt(index);
 
-    UserRepository.instance.movePendingItem(movedItem);
+    UserRepository.instance.movePendingItem(movedItem, location);
   }
 
   Future<void> loadNotUsedItems() async {

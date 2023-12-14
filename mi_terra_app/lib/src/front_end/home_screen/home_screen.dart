@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/back_end/controllers/external_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
@@ -16,7 +17,7 @@ import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void addNewExpense(BuildContext context) async {
+  void showSelectionMenu(BuildContext context) async {
     final ButtonController buttonController = Get.find<ButtonController>();
     final ProductsController productsController =
         Get.find<ProductsController>();
@@ -24,9 +25,7 @@ class HomeScreen extends StatelessWidget {
     // Fetch user products if not available
     await productsController.fetchUserProductsIfNeeded();
 
-    final List<String> productNames = productsController.products
-        .map<String>((product) => product['product_name'] as String)
-        .toList();
+    final List<Map<String, dynamic>> products = productsController.products;
 
     showDialog(
       context: context,
@@ -37,10 +36,10 @@ class HomeScreen extends StatelessWidget {
             child: ListBody(
               children: [
                 // Dynamically build radio buttons for user products
-                for (var productName in productNames)
+                for (var product in products)
                   RadioButtonWidget(
-                    value: productName,
-                    title: productName,
+                    value: product['product_id'] as String,
+                    title: product['product_name'] as String,
                   ),
                 // Add "Gasto general" option
                 const RadioButtonWidget(
@@ -51,10 +50,25 @@ class HomeScreen extends StatelessWidget {
                 GestureDetector(
                   child: const Text("Añadir"),
                   onTap: () {
-                    // Handle the logic when "Añadir" is tapped
-                    print("Selected order type: ${buttonController.orderType}");
+                    if (buttonController.orderType == 'Gasto general') {
+                      print("User selected 'Gasto General'");
+                      // Add any additional logic you want for this case
+                    } else {
+                      final selectedProduct = products.firstWhere(
+                        (product) =>
+                            product['product_id'] == buttonController.orderType,
+                      );
+
+                      if (selectedProduct != null) {
+                        Navigator.of(context).pop();
+                        showDetailedExpenseDialog(context, selectedProduct);
+                      } else {
+                        print("Error: Selected product not found");
+                      }
+                    }
                   },
                 ),
+
                 const SizedBox(height: 20),
                 GestureDetector(
                   child: const Text("Cancelar"),
@@ -63,6 +77,66 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showDetailedExpenseDialog(
+      BuildContext context, Map<String, dynamic> productData) {
+    final ExternalController externalController =
+        Get.find<ExternalController>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Nuevo gasto para ${productData['product_name']}"),
+          content: SingleChildScrollView(
+            child: Form(
+              key: externalController.formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Precio unidad",
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: externalController.expensePricePerUnit,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Unidades compradas",
+                    ),
+                    controller: externalController.expenseQuantity,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa una cantidad mínima';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "¿Qué compraste?",
+                    ),
+                    controller: externalController.expenseItemName,
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      if (externalController.formKey.currentState?.validate() ??
+                          false) {
+                        await externalController.createExpense(productData);
+                        Navigator.of(context).pop(); // Close the dialog
+                      }
+                    },
+                    child: const Text("Añadir nuevo gasto"),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -191,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                           splashColor:
                               Theme.of(context).colorScheme.onSurfaceVariant,
                           onTap: () {
-                            addNewExpense(context);
+                            showSelectionMenu(context);
                           },
                           child: const SizedBox(
                             width: 150,

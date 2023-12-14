@@ -18,10 +18,10 @@ class ProductUnitsController extends GetxController {
 
     try {
       await UserRepository.instance.saveUnitsQuantity(unitData);
-      Get.snackbar('Hecho.', 'Nuevo gasto añadido');
+      Get.snackbar('Hecho.', 'Productos disponibles actualizados');
     } catch (error) {
       print('Error creating expense: $error');
-      Get.snackbar('Ups', 'No se ha podido guardar el gasto: $error');
+      Get.snackbar('Ups', 'No se ha podido guardar la información: $error');
     }
   }
 }

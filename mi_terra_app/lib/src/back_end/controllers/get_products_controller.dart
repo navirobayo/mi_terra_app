@@ -23,4 +23,10 @@ class ProductsController extends GetxController {
       print("Error deleting product: $error");
     }
   }
+
+  Future<void> fetchUserProductsIfNeeded() async {
+    if (products.isEmpty) {
+      await getUserProducts();
+    }
+  }
 }

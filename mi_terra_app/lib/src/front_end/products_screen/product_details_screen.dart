@@ -41,7 +41,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Comentario",
                     ),
                     controller: saleController.productCommentary,
@@ -73,15 +73,22 @@ class ProductDetailsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Nuevo gasto"),
+          title: const Text("Añadir gasto"),
           content: SingleChildScrollView(
             child: Form(
               key: formKey,
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Cantidad",
+                    decoration: const InputDecoration(
+                      hintText: "Precio unidad",
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller: expenseController.expensePricePerUnit,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Unidades compradas",
                     ),
                     controller: expenseController.expenseQuantity,
                     keyboardType: TextInputType.number,
@@ -93,14 +100,8 @@ class ProductDetailsScreen extends StatelessWidget {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Precio por unidad",
-                    ),
-                    controller: expenseController.expensePricePerUnit,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Nombre del gasto",
+                    decoration: const InputDecoration(
+                      hintText: "¿Qué compraste?",
                     ),
                     controller: expenseController.expenseItemName,
                   ),
@@ -112,7 +113,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         Get.offAll(const HomeScreen());
                       }
                     },
-                    child: const Text("Añadir gasto"),
+                    child: const Text("Añadir nuevo gasto"),
                   ),
                 ],
               ),
@@ -133,7 +134,7 @@ class ProductDetailsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Nuevo gasto"),
+          title: const Text("Productos listos para venta"),
           content: SingleChildScrollView(
             child: Form(
               key: formKey,
@@ -141,7 +142,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 children: [
                   TextFormField(
                     decoration: const InputDecoration(
-                      hintText: "Cantidad",
+                      hintText: "Cantidad de productos",
                     ),
                     controller: productUnitsController.productQuantity,
                     keyboardType: TextInputType.number,
@@ -159,7 +160,7 @@ class ProductDetailsScreen extends StatelessWidget {
                         Get.offAll(const HomeScreen());
                       }
                     },
-                    child: const Text("Añadir gasto"),
+                    child: const Text("Añadir producto(s)"),
                   ),
                 ],
               ),

@@ -16,13 +16,18 @@ import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void addNewExpense(BuildContext context) {
+  void addNewExpense(BuildContext context) async {
     final ButtonController buttonController = Get.find<ButtonController>();
     final ProductsController productsController =
         Get.find<ProductsController>();
+
+    // Fetch user products if not available
+    await productsController.fetchUserProductsIfNeeded();
+
     final List<String> productNames = productsController.products
         .map<String>((product) => product['product_name'] as String)
         .toList();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {

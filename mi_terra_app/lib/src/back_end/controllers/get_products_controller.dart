@@ -12,6 +12,15 @@ class ProductsController extends GetxController {
       print('Error fetching user products: $error');
     }
   }
-}
 
-//* Note: The controller of data needs to have a beggining date, based on that the app should calculate the production time. In this way even if the user changes the beggining date, the same function will calculate how much time is in production (taking into account the actual date)
+  Future<void> deleteProduct(String productId) async {
+    try {
+      await userRepository.deleteProduct(productId);
+      products.removeWhere((product) => product['product_id'] == productId);
+      Get.snackbar('Perfecto', 'Tu producto ha sido eliminado');
+    } catch (error) {
+      Get.snackbar('Error', 'No se ha podido eliminar el producto: $error');
+      print("Error deleting product: $error");
+    }
+  }
+}

@@ -43,6 +43,26 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> deleteProduct(String productId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    try {
+      await userDocumentRef.update({
+        "products.$productId": FieldValue.delete(),
+      });
+    } catch (error) {
+      print("Error deleting product: $error");
+      throw error;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getUserProducts() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

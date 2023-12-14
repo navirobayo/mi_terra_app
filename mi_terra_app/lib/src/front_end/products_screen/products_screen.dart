@@ -76,6 +76,33 @@ class ProductsScreen extends StatelessWidget {
                                       productsController.products[index]),
                             ));
                           },
+                          onLongPress: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("¿Eliminar?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("Cancelar"),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            final productId = productsController
+                                                .products[index]['product_id'];
+                                            productsController
+                                                .deleteProduct(productId);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                              "Eliminar permanentemente"))
+                                    ],
+                                  );
+                                });
+                          },
                         );
                       },
                     ),

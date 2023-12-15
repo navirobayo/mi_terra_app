@@ -6,6 +6,8 @@ import 'package:uuid/uuid.dart';
 class ExpenseController extends GetxController {
   static ExpenseController get instance => Get.find();
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   TextEditingController expenseQuantity = TextEditingController();
   TextEditingController expensePricePerUnit = TextEditingController();
   TextEditingController expenseItemName = TextEditingController();

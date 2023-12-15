@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 class SaleController extends GetxController {
   static SaleController get instance => Get.find();
+  final formKey = GlobalKey<FormState>();
 
   TextEditingController productQuantity = TextEditingController();
   TextEditingController productCommentary = TextEditingController();

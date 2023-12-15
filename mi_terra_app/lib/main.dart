@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
-import 'package:mi_terra_app/src/back_end/controllers/external_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/inventory_controller.dart';
@@ -54,7 +53,6 @@ Future<void> initializeDependencies() async {
   Get.put(ConnectionManagerController());
   Get.put(InventoryController());
   Get.put(ProductUnitsController());
-  Get.put(ExternalController());
   Get.put(GeneralExpenseController());
 }
 

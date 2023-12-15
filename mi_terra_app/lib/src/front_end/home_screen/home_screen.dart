@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
-import 'package:mi_terra_app/src/back_end/controllers/external_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
 import 'package:mi_terra_app/src/front_end/inventory_screen/inventory_screen.dart';
@@ -18,7 +19,7 @@ import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  void showSelectionMenu(BuildContext context) async {
+  void showSelectionMenuForExpenses(BuildContext context) async {
     final ButtonController buttonController = Get.find<ButtonController>();
     final ProductsController productsController =
         Get.find<ProductsController>();
@@ -28,6 +29,7 @@ class HomeScreen extends StatelessWidget {
 
     final List<Map<String, dynamic>> products = productsController.products;
 
+    // ignore: use_build_context_synchronously
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -86,10 +88,93 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  void showSelectionMenuForSales(BuildContext context) async {
+    final ButtonController buttonController = Get.find<ButtonController>();
+    final ProductsController productsController =
+        Get.find<ProductsController>();
+
+    // Fetch user products if not available
+    await productsController.fetchUserProductsIfNeeded();
+
+    final List<Map<String, dynamic>> products = productsController.products;
+
+    // Check if the list of products is empty
+    if (products.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Nueva venta"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  const Text("No hay ningún producto para vender!"),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    child: const Text("Cancelar"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+      return;
+    }
+
+    // ignore: use_build_context_synchronously
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nueva venta"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                // Dynamically build radio buttons for user products
+                for (var product in products)
+                  RadioButtonWidget(
+                    value: product['product_id'] as String,
+                    title: product['product_name'] as String,
+                  ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  child: const Text("Añadir"),
+                  onTap: () {
+                    final selectedProduct = products.firstWhere(
+                      (product) =>
+                          product['product_id'] == buttonController.orderType,
+                    );
+
+                    if (selectedProduct != null) {
+                      Navigator.of(context).pop();
+                      showDetailedSellDialog(context, selectedProduct);
+                    } else {
+                      print("Error: Selected product not found");
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  child: const Text("Cancelar"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void showDetailedExpenseDialog(
       BuildContext context, Map<String, dynamic> productData) {
-    final ExternalController externalController =
-        Get.find<ExternalController>();
+    final ExpenseController expenseController = Get.find<ExpenseController>();
 
     showDialog(
       context: context,
@@ -98,7 +183,7 @@ class HomeScreen extends StatelessWidget {
           title: Text("Nuevo gasto para ${productData['product_name']}"),
           content: SingleChildScrollView(
             child: Form(
-              key: externalController.formKey,
+              key: expenseController.formKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -106,13 +191,13 @@ class HomeScreen extends StatelessWidget {
                       hintText: "Precio unidad",
                     ),
                     keyboardType: TextInputType.number,
-                    controller: externalController.expensePricePerUnit,
+                    controller: expenseController.expensePricePerUnit,
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
                       hintText: "Unidades compradas",
                     ),
-                    controller: externalController.expenseQuantity,
+                    controller: expenseController.expenseQuantity,
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -125,17 +210,70 @@ class HomeScreen extends StatelessWidget {
                     decoration: const InputDecoration(
                       hintText: "¿Qué compraste?",
                     ),
-                    controller: externalController.expenseItemName,
+                    controller: expenseController.expenseItemName,
                   ),
                   TextButton(
                     onPressed: () async {
-                      if (externalController.formKey.currentState?.validate() ??
+                      if (expenseController.formKey.currentState?.validate() ??
                           false) {
-                        await externalController.createExpense(productData);
+                        await expenseController.createExpense(productData);
                         Navigator.of(context).pop(); // Close the dialog
                       }
                     },
                     child: const Text("Añadir nuevo gasto"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showDetailedSellDialog(
+      BuildContext context, Map<String, dynamic> productData) {
+    final SaleController saleController = Get.find<SaleController>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nueva venta"),
+          content: SingleChildScrollView(
+            child: Form(
+              key: saleController.formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Cantidad de unidades",
+                    ),
+                    controller: saleController.productQuantity,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Entra una cantidad mínima';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Comentario",
+                    ),
+                    controller: saleController.productCommentary,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (saleController.formKey.currentState?.validate() ??
+                          false) {
+                        saleController.createSale(productData);
+                        //Then calculate the profits.
+                        Get.offAll(const HomeScreen());
+                      }
+                    },
+                    child: const Text("Crear venta"),
                   ),
                 ],
               ),
@@ -331,7 +469,7 @@ class HomeScreen extends StatelessWidget {
                           splashColor:
                               Theme.of(context).colorScheme.onSurfaceVariant,
                           onTap: () {
-                            showSelectionMenu(context);
+                            showSelectionMenuForExpenses(context);
                           },
                           child: const SizedBox(
                             width: 150,
@@ -351,9 +489,7 @@ class HomeScreen extends StatelessWidget {
                           splashColor:
                               Theme.of(context).colorScheme.onSurfaceVariant,
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const StoreScreen(),
-                            ));
+                            showSelectionMenuForSales(context);
                           },
                           child: const SizedBox(
                             width: 150,

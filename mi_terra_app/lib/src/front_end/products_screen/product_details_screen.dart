@@ -15,7 +15,6 @@ class ProductDetailsScreen extends StatelessWidget {
   Future<void> createNewSale(BuildContext context, String productId,
       double productPricePerUnit) async {
     final SaleController saleController = Get.find<SaleController>();
-    final formKey = GlobalKey<FormState>();
 
     showDialog(
       context: context,
@@ -24,7 +23,7 @@ class ProductDetailsScreen extends StatelessWidget {
           title: const Text("Nueva venta"),
           content: SingleChildScrollView(
             child: Form(
-              key: formKey,
+              key: saleController.formKey,
               child: Column(
                 children: [
                   TextFormField(
@@ -48,7 +47,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {
+                      if (saleController.formKey.currentState?.validate() ??
+                          false) {
                         saleController.createSale(productData);
                         //Then calculate the profits.
                         Get.offAll(const HomeScreen());

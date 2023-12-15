@@ -6,6 +6,7 @@ import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.da
 import 'package:mi_terra_app/src/back_end/controllers/inventory_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/network_binding.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_units_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/public_products_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
@@ -54,6 +55,7 @@ Future<void> initializeDependencies() async {
   Get.put(InventoryController());
   Get.put(ProductUnitsController());
   Get.put(GeneralExpenseController());
+  Get.put(PublicProductsController());
 }
 
 // The main function of the app.

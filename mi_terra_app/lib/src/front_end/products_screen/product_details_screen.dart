@@ -27,7 +27,7 @@ class ProductDetailsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Cantidad de unidades",
                     ),
                     controller: saleController.productQuantity,
@@ -188,7 +188,7 @@ class ProductDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 4,
             ),
             Row(
@@ -222,7 +222,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 6,
             ),
             Row(
@@ -232,26 +232,26 @@ class ProductDetailsScreen extends StatelessWidget {
                     onPressed: () {
                       print("test");
                     },
-                    icon: Icon(Icons.app_registration_outlined)),
+                    icon: const Icon(Icons.app_registration_outlined)),
                 IconButton.outlined(
                     onPressed: () {
                       print("test");
                     },
-                    icon: Icon(Icons.camera_alt_outlined)),
+                    icon: const Icon(Icons.camera_alt_outlined)),
                 IconButton.outlined(
                     onPressed: () {
                       print("test");
                     },
-                    icon: Icon(Icons.qr_code_2_outlined)),
+                    icon: const Icon(Icons.qr_code_2_outlined)),
               ],
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   Row(
                     children: [
-                      Text("Ventas: ",
+                      const Text("Ventas: ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
                       Text("\$ ${productData['product_sales_net_value']}",
@@ -260,7 +260,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("Ganancias: ",
+                      const Text("Ganancias: ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
                       Text("\$ ${productData['product_profits']}",
@@ -269,7 +269,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         "Gastos: ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
@@ -280,7 +280,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("Disponibles: ",
+                      const Text("Disponibles: ",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20)),
                       Text(productData['products_ready'].toString(),
@@ -308,7 +308,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Card(
@@ -329,7 +329,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             Card(

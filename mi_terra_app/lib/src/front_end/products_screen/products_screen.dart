@@ -61,7 +61,7 @@ class ProductsScreen extends StatelessWidget {
           } else {
             return Obx(
               () => productsController.products.isEmpty
-                  ? const Center(child: Text('No has creado ningún producto!'))
+                  ? const Center(child: Text('No has creado ningún producto.'))
                   : ListView.builder(
                       itemCount: productsController.products.length,
                       itemBuilder: (context, index) {

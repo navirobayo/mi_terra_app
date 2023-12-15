@@ -100,6 +100,7 @@ class HomeScreen extends StatelessWidget {
 
     // Check if the list of products is empty
     if (products.isEmpty) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -108,7 +109,7 @@ class HomeScreen extends StatelessWidget {
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
-                  const Text("No hay ningún producto para vender!"),
+                  const Text("¡No hay ningún producto para vender!"),
                   const SizedBox(height: 20),
                   GestureDetector(
                     child: const Text("Cancelar"),

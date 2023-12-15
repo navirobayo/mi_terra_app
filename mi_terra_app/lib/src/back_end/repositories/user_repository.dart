@@ -171,8 +171,38 @@ class UserRepository extends GetxController {
         "products.$productId.products_ready": FieldValue.increment(-soldUnits),
       });
       await updateProductProfits(productId);
+      await updatePublicProductObject(productId, userId);
     } catch (error) {
       print("Error guardando esta venta: $error");
+      throw error;
+    }
+  }
+
+  Future<void> updatePublicProductObject(
+      String productId, String userId) async {
+    final userDocumentRef = database.collection("users").doc(userId);
+    final storeDocumentRef = database.collection("store").doc(productId);
+
+    try {
+      // Fetch the most up-to-date available quantity from the user's document
+      final userDocumentSnapshot = await userDocumentRef.get();
+      final userProductData =
+          userDocumentSnapshot.data() as Map<String, dynamic>;
+      final double productQuantityValue =
+          userProductData['products'][productId]['products_ready'] ?? 0;
+
+      if (productQuantityValue > 0) {
+        // Update the products_ready field in the public product object
+        await storeDocumentRef.update({
+          'user_id': userId,
+          'products_ready': productQuantityValue,
+        });
+      } else {
+        // Delete the public product object if available quantity is not greater than 0
+        await storeDocumentRef.delete();
+      }
+    } catch (error) {
+      print("Error updating public product object: $error");
       throw error;
     }
   }
@@ -465,6 +495,53 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<void> createPublicProductObject(
+      Map<String, dynamic> productData) async {
+    final productId = productData['product_id'];
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    final storeDocumentRef = database.collection("store").doc(productId);
+
+    try {
+      // Remove unnecessary fields from the product data
+      productData.remove('product_expenses');
+      productData.remove('product_notes');
+      productData.remove('product_profits');
+      productData.remove('product_creation');
+      productData.remove('product_sales_counter');
+      productData.remove('product_sales_net_value');
+      productData.remove('product_spent_net_value');
+      productData.remove('product_sales');
+      productData.remove('product_units');
+
+      // Include userId field in the public product data
+      productData['user_id'] = userId;
+
+      // Fetch the most up-to-date available quantity from the user's document
+      final userDocumentSnapshot = await userDocumentRef.get();
+      final userProductData =
+          userDocumentSnapshot.data() as Map<String, dynamic>;
+      final double productQuantityValue =
+          userProductData['products'][productId]['products_ready'] ?? 0;
+
+      // Update the products_ready field with the current available quantity
+      productData['products_ready'] = productQuantityValue;
+
+      // Create a copy of the product in the "store" collection
+      await storeDocumentRef.set(productData);
+    } catch (error) {
+      print("Error creating public product object: $error");
+      throw error;
+    }
+  }
+
   Future<void> updateProductProfits(String productId) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
@@ -518,18 +595,14 @@ class UserRepository extends GetxController {
     final userDocumentRef = database.collection("users").doc(userId);
 
     try {
-      // Retrieve the current user document
       final userDocumentSnapshot = await userDocumentRef.get();
       final userData = userDocumentSnapshot.data() as Map<String, dynamic>;
 
-      // Extract global_data from the document
       final globalData = userData["global_data"] as Map<String, dynamic>;
 
-      // Calculate profits by deducting global_spent_net_value
       final profits = (globalData["global_profits"] ?? 0) -
           (globalData["global_spent_net_value"] ?? 0);
 
-      // Update the document with the new profits value
       await userDocumentRef.update({
         "global_data.global_profits": profits,
       });
@@ -537,6 +610,27 @@ class UserRepository extends GetxController {
       print("Updated global profits");
     } catch (error) {
       print("Error updating global profits: $error");
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getAvailablePublicProducts() async {
+    final storeCollection = FirebaseFirestore.instance.collection('store');
+
+    try {
+      final querySnapshot = await storeCollection.get();
+      final publicProducts = querySnapshot.docs
+          .map((doc) => doc.data() as Map<String, dynamic>)
+          .toList();
+
+      // Filter out products with available quantity less than or equal to 0
+      final filteredPublicProducts = publicProducts
+          .where((product) => (product['products_ready'] ?? 0) > 0)
+          .toList();
+
+      return filteredPublicProducts;
+    } catch (error) {
+      print("Error fetching available public products: $error");
+      throw error;
     }
   }
 

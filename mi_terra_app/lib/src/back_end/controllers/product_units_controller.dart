@@ -17,7 +17,15 @@ class ProductUnitsController extends GetxController {
     };
 
     try {
+      // Update available quantity in the user's document
       await UserRepository.instance.saveUnitsQuantity(unitData);
+
+      // Check if available quantity is greater than 0 to create the publicProductObject
+      if (productQuantityValue > 0) {
+        // Create a copy of the product in the "store" collection
+        await UserRepository.instance.createPublicProductObject(productData);
+      }
+
       Get.snackbar('Hecho.', 'Productos disponibles actualizados');
     } catch (error) {
       print('Error creating expense: $error');

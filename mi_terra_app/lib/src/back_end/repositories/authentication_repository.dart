@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_global_data_controller.dart';
 import 'package:mi_terra_app/src/back_end/exceptions/email_registration_failure.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/welcome_screen/welcome_screen.dart';
@@ -19,9 +20,13 @@ class AuthenticationRepository extends GetxController {
   }
 
   _setInitialScreen(User? user) {
-    user == null
-        ? Get.offAll(() => const WelcomeScreen())
-        : Get.offAll(() => const HomeScreen());
+    if (user == null) {
+      Get.offAll(() => const WelcomeScreen());
+    } else {
+      Get.offAll(() => const HomeScreen());
+      // Call fetchUserName if the user is authenticated
+      Get.find<GetGlobalDataController>().fetchUserName();
+    }
   }
 
   Future<void> createUserWithEmailAndPassword(

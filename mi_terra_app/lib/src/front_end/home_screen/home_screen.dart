@@ -4,6 +4,7 @@ import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_global_data_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
@@ -18,6 +19,22 @@ import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  void showProfileView(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const AlertDialog(
+          title: Text("Mi Terra Perfil"),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   void showSelectionMenuForExpenses(BuildContext context) async {
     final ButtonController buttonController = Get.find<ButtonController>();
@@ -351,20 +368,35 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ConnectionManagerController _controller =
-        Get.find<ConnectionManagerController>();
+    final ConnectionManagerController connectionManagerController = Get.find<
+        ConnectionManagerController>(); //! Check what exactly does this.
+    final GetGlobalDataController getGlobalDataController =
+        Get.find<GetGlobalDataController>();
     return Scaffold(
       appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text("Hola, $testUserName"),
+          title: Obx(
+            () {
+              return Text(
+                getGlobalDataController.loading.value
+                    ? "Hola, cargando..."
+                    : "Hola, ${getGlobalDataController.userName.value}",
+              );
+            },
+          ),
           actions: [
+            IconButton(
+                onPressed: () {
+                  showProfileView(context);
+                },
+                icon: const Icon(Icons.eco)),
             IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SettingsScreen(),
                   ));
                 },
-                icon: const Icon(Icons.settings))
+                icon: const Icon(Icons.settings)),
           ]),
       body: Padding(
         padding: const EdgeInsets.all(10),

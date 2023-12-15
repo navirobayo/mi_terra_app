@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/src/back_end/controllers/contact_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/get_global_data_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/inventory_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/network_binding.dart';
@@ -11,6 +13,7 @@ import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.da
 import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/registration_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
@@ -43,10 +46,12 @@ Future<void> initializeDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Get.put(AuthenticationRepository());
+  Get.put(RegistrationController());
   Get.put(UserRepository());
   Get.put(ProductsController());
   Get.put(ProductController());
   Get.put(ContactsController());
+  Get.put(ContactController());
   Get.put(ButtonController());
   Get.put(SaleController());
   Get.put(ExpenseController());
@@ -56,6 +61,7 @@ Future<void> initializeDependencies() async {
   Get.put(ProductUnitsController());
   Get.put(GeneralExpenseController());
   Get.put(PublicProductsController());
+  Get.put(GetGlobalDataController());
 }
 
 // The main function of the app.

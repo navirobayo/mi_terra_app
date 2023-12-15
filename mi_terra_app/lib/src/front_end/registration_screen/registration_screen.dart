@@ -7,8 +7,7 @@ class RegistrationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(RegistrationController());
-    final _formKey = GlobalKey<FormState>();
+    final controller = Get.find<RegistrationController>();
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -22,7 +21,7 @@ class RegistrationScreen extends StatelessWidget {
                 ),
                 const Text("Crea tu cuenta"),
                 Form(
-                    key: _formKey,
+                    key: controller.formKey,
                     child: Column(
                       children: [
                         TextFormField(
@@ -35,9 +34,14 @@ class RegistrationScreen extends StatelessWidget {
                           decoration: const InputDecoration(
                               labelText: "Crea una contraseña"),
                         ),
+                        TextFormField(
+                          controller: controller.terraUsername,
+                          decoration: const InputDecoration(
+                              labelText: "Tu nombre o el de tu negocio"),
+                        ),
                         TextButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (controller.formKey.currentState!.validate()) {
                                 RegistrationController.instance.registerUser(
                                     controller.terraEmail.text.trim(),
                                     controller.terraPassword.text.trim());

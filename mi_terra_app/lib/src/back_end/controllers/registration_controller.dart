@@ -6,8 +6,11 @@ import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
 class RegistrationController extends GetxController {
   static RegistrationController get instance => Get.find();
 
+  final formKey = GlobalKey<FormState>();
+
   final terraEmail = TextEditingController();
   final terraPassword = TextEditingController();
+  final terraUsername = TextEditingController();
 
   void registerUser(String terraEmail, String terraPassword) {
     AuthenticationRepository.instance
@@ -30,7 +33,7 @@ class RegistrationController extends GetxController {
       "profile": {
         "user_bio:": "Cuéntanos más sobre ti o sobre tu empresa",
         "user_location": "Sin dirección física",
-        "user_name": "Un apodo, tu nombre o el de tu empresa",
+        "user_name": terraUsername.text,
         "user_phone": "No Teléfono",
         "user_social_media_01": "Tu red social de preferencia",
         "user_social_media_01_title": "",

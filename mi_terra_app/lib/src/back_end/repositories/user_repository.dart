@@ -24,6 +24,25 @@ class UserRepository extends GetxController {
     });
   }
 
+  Future<Map<String, dynamic>> fetchUserDetails() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        print("User is not authenticated.");
+        return {};
+      }
+
+      final userId = user.uid;
+      final userDocumentRef = database.collection("users").doc(userId);
+
+      final userData = await userDocumentRef.get();
+      return userData.data() ?? {};
+    } catch (error) {
+      print('Error fetching user details: $error');
+      throw error;
+    }
+  }
+
   Future<void> saveProduct(Map<String, dynamic> productData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

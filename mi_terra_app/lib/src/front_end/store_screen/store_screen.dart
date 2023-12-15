@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/public_products_controller.dart';
+import 'package:mi_terra_app/src/front_end/store_screen/public_product_view_screen.dart';
 
 class StoreScreen extends StatelessWidget {
   const StoreScreen({Key? key}) : super(key: key);
@@ -35,54 +36,81 @@ class StoreScreen extends StatelessWidget {
                         final product =
                             publicProductsController.publicProducts[index];
 
-                        return Card(
-                          color: Theme.of(context).colorScheme.onBackground,
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Container(
-                                  height:
-                                      100, // Set a fixed height for the image container
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.rectangle,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Image.network(
-                                          product['product_cover'],
-                                          fit: BoxFit.cover,
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            } else {
-                                              return Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      ],
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PublicProductViewScreen(product: product),
+                              ),
+                            );
+                          },
+                          child: Card(
+                            color: Theme.of(context).colorScheme.onBackground,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Container(
+                                    height: 100,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Image.network(
+                                            product['product_cover'],
+                                            fit: BoxFit.cover,
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            loadingBuilder:
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent?
+                                                        loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              } else {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(product['product_name'] ?? ''),
-                                Text(
-                                  "\$${product['product_price'] ?? 0} libra. ${product['products_ready'] ?? 0} Disponibles",
-                                ),
-                              ],
+                                  Row(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Text(product['product_name']),
+                                          Text(
+                                            "\$${product['product_price'] ?? 0}",
+                                          ),
+                                          Text(
+                                            "${product['products_ready'] ?? 0} Disponibles",
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      const IconButton(
+                                          onPressed: null,
+                                          icon: Icon(Icons.logout))
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         );

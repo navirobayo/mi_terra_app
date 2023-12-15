@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/contact_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_contacts_controller.dart';
-import 'package:mi_terra_app/src/front_end/contacts_screen/contact_details_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
 
   Future<void> createNewContact(BuildContext context) async {
-    final controller = Get.put(ContactController());
+    final contactController = Get.find<ContactController>();
     final formKey = GlobalKey<FormState>();
     showDialog(
         context: context,
@@ -22,38 +21,38 @@ class ContactsScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Nombre de contacto",
                         ),
-                        controller: controller.contactName,
+                        controller: contactController.contactName,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Número de contacto",
                         ),
-                        controller: controller.contactPhone,
+                        controller: contactController.contactPhone,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Nota acerca este contacto",
                         ),
-                        controller: controller.contactNote,
+                        controller: contactController.contactNote,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Ubicación - Dirección",
                         ),
-                        controller: controller.contactLocation,
+                        controller: contactController.contactLocation,
                       ),
                       TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "Redes sociales",
                         ),
-                        controller: controller.contactSocialMedia,
+                        controller: contactController.contactSocialMedia,
                       ),
                       TextButton(
                           onPressed: () {
-                            controller.createContact();
+                            contactController.createContact();
                             Get.offAll(const HomeScreen());
                           },
                           child: const Text("Crear contacto")),
@@ -106,37 +105,63 @@ class ContactsScreen extends StatelessWidget {
                           ),
                           onTap: () {
                             showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    actions: [
-                                      Row(
-                                        children: [
-                                          Text("Llamar"),
-                                          IconButton(
-                                              onPressed: null,
-                                              icon: Icon(Icons.call)),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text("Editar"),
-                                          IconButton(
-                                              onPressed: null,
-                                              icon: Icon(Icons.edit)),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text("Eliminar"),
-                                          IconButton(
-                                              onPressed: null,
-                                              icon: Icon(Icons.delete)),
-                                        ],
-                                      ),
-                                    ],
-                                  );
-                                });
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Text(
+                                      "${contactsController.contacts[index]['contact_name']}"),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(Icons.call),
+                                          onPressed: () {
+                                            // Add your call functionality here
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.edit),
+                                          onPressed: () {
+                                            // Add your edit functionality here
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            // Add your delete functionality here
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    ButtonBar(
+                                      alignment: MainAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // Add your call functionality here
+                                          },
+                                          child: Text("Llamar"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // Add your edit functionality here
+                                          },
+                                          child: Text("Editar"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // Add your delete functionality here
+                                          },
+                                          child: Text("Eliminar"),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                         );
                       },

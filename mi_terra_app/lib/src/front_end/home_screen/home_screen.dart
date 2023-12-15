@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
 import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/back_end/controllers/external_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/getx_network_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
@@ -52,7 +53,8 @@ class HomeScreen extends StatelessWidget {
                   onTap: () {
                     if (buttonController.orderType == 'Gasto general') {
                       print("User selected 'Gasto General'");
-                      // Add any additional logic you want for this case
+                      Navigator.of(context).pop();
+                      showDetailedGeneralExpenseDialog(context);
                     } else {
                       final selectedProduct = products.firstWhere(
                         (product) =>
@@ -130,6 +132,70 @@ class HomeScreen extends StatelessWidget {
                       if (externalController.formKey.currentState?.validate() ??
                           false) {
                         await externalController.createExpense(productData);
+                        Navigator.of(context).pop(); // Close the dialog
+                      }
+                    },
+                    child: const Text("Añadir nuevo gasto"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void showDetailedGeneralExpenseDialog(context) {
+    final GeneralExpenseController generalExternalExpenseController =
+        Get.find<GeneralExpenseController>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Nuevo gasto general"),
+          content: SingleChildScrollView(
+            child: Form(
+              key: generalExternalExpenseController.formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Precio unidad",
+                    ),
+                    keyboardType: TextInputType.number,
+                    controller:
+                        generalExternalExpenseController.expensePricePerUnit,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Unidades compradas",
+                    ),
+                    controller:
+                        generalExternalExpenseController.expenseQuantity,
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa una cantidad mínima';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "¿Qué compraste?",
+                    ),
+                    controller:
+                        generalExternalExpenseController.expenseItemName,
+                  ),
+                  TextButton(
+                    onPressed: () async {
+                      if (generalExternalExpenseController.formKey.currentState
+                              ?.validate() ??
+                          false) {
+                        await generalExternalExpenseController
+                            .createGeneralExpense();
                         Navigator.of(context).pop(); // Close the dialog
                       }
                     },

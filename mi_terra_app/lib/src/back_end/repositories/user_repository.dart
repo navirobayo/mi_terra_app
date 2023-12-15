@@ -85,6 +85,28 @@ class UserRepository extends GetxController {
     return productList;
   }
 
+  Future<List<Map<String, dynamic>>> getGlobalObject() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    final userData = await userDocumentRef.get();
+    final products = userData.data()?['global_data'] ?? {};
+
+    // Convert products map to a list
+    List<Map<String, dynamic>> productList = [];
+    products.forEach((key, value) {
+      productList.add(value);
+    });
+
+    return productList;
+  }
+
   Future<void> saveContact(Map<String, dynamic> contactData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
@@ -175,6 +197,31 @@ class UserRepository extends GetxController {
             FieldValue.increment(totalSpent),
       });
       await updateProductProfits(productId);
+    } catch (error) {
+      print("Error guardando esta venta: $error");
+      throw error;
+    }
+  }
+
+  Future<void> saveGeneralExpense(Map<String, dynamic> expenseData) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+    const globalId = "global_expenses";
+    final expenseId = expenseData['general_expense_id'];
+    final double totalSpent = expenseData['total_spent'] as double;
+
+    try {
+      await userDocumentRef.update({
+        "global_data.$globalId.$expenseId": expenseData,
+        "global_data.global_spent_net_value": FieldValue.increment(totalSpent),
+      });
+      await updateGlobalProfits(globalId);
     } catch (error) {
       print("Error guardando esta venta: $error");
       throw error;
@@ -457,6 +504,39 @@ class UserRepository extends GetxController {
       print("Updated product_profits for $productId");
     } catch (error) {
       print("Error updating product profits: $error");
+    }
+  }
+
+  Future<void> updateGlobalProfits(String globalId) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return;
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    try {
+      // Retrieve the current user document
+      final userDocumentSnapshot = await userDocumentRef.get();
+      final userData = userDocumentSnapshot.data() as Map<String, dynamic>;
+
+      // Extract global_data from the document
+      final globalData = userData["global_data"] as Map<String, dynamic>;
+
+      // Calculate profits by deducting global_spent_net_value
+      final profits = (globalData["global_profits"] ?? 0) -
+          (globalData["global_spent_net_value"] ?? 0);
+
+      // Update the document with the new profits value
+      await userDocumentRef.update({
+        "global_data.global_profits": profits,
+      });
+
+      print("Updated global profits");
+    } catch (error) {
+      print("Error updating global profits: $error");
     }
   }
 

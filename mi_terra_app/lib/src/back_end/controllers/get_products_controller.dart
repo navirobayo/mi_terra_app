@@ -13,6 +13,14 @@ class ProductsController extends GetxController {
     }
   }
 
+  Future<void> getGlobalObject() async {
+    try {
+      products.assignAll(await userRepository.getGlobalObject());
+    } catch (error) {
+      print('Error fetching user products: $error');
+    }
+  }
+
   Future<void> deleteProduct(String productId) async {
     try {
       await userRepository.deleteProduct(productId);

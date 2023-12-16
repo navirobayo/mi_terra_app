@@ -16,6 +16,7 @@ import 'package:mi_terra_app/src/front_end/profit_screen/profit_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
 import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
+import 'package:mi_terra_app/src/front_end/user_catalog_screen/user_catalog_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -406,7 +407,7 @@ class HomeScreen extends StatelessWidget {
                         icon: const Icon(Icons.storefront_sharp),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const StoreScreen(),
+                            builder: (context) => const UserCatalogScreen(),
                           ));
                         },
                       )),
@@ -594,7 +595,7 @@ class HomeScreen extends StatelessWidget {
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Mis finanzas')),
+                        child: Center(child: Text('Estadísticas')),
                       ),
                     ),
                   ),

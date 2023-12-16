@@ -653,6 +653,59 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getTestFunction() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    final userData = await userDocumentRef.get();
+    final products = userData.data()?['products'] ?? {};
+
+    // Convert products map to a list
+    List<Map<String, dynamic>> productList = [];
+    products.forEach((key, value) {
+      productList.add(value);
+    });
+
+    return productList;
+  }
+
+  Future<List<Map<String, dynamic>>> getAvailableUserProducts() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      print("User is not authenticated.");
+      return [];
+    }
+
+    final userId = user.uid;
+    final userDocumentRef = database.collection("users").doc(userId);
+
+    try {
+      final userData = await userDocumentRef.get();
+      final products = userData.data()?['products'] ?? {};
+
+      final publicProducts = (products as Map<String, dynamic>)
+          .values
+          .map((doc) => doc as Map<String, dynamic>)
+          .toList();
+
+      // Filter out products with available quantity less than or equal to 0
+      final filteredPublicProducts = publicProducts
+          .where((product) => (product['products_ready'] ?? 0) > 0)
+          .toList();
+
+      return filteredPublicProducts;
+    } catch (error) {
+      print("Error fetching available public products: $error");
+      throw error;
+    }
+  }
+
   Future<void> saveGlobal(Map<String, dynamic> globalData) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {

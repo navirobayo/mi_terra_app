@@ -16,6 +16,7 @@ import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.da
 import 'package:mi_terra_app/src/back_end/controllers/registration_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/tasks_controller.dart';
+import 'package:mi_terra_app/src/back_end/controllers/user_catalog_controller.dart';
 import 'package:mi_terra_app/src/back_end/repositories/authentication_repository.dart';
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
@@ -62,6 +63,7 @@ Future<void> initializeDependencies() async {
   Get.put(GeneralExpenseController());
   Get.put(PublicProductsController());
   Get.put(GetGlobalDataController());
+  Get.put(UserCatalogController());
 }
 
 // The main function of the app.

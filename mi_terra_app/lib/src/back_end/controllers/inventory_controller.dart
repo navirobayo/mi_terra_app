@@ -22,12 +22,18 @@ class InventoryController extends GetxController {
     }
   }
 
-  void moveToUsedItems(int index, String location) {
-    final String movedItem = pendingItems[index];
-    usedItems.add(movedItem);
+  void moveToUsedItems(int index, String location) async {
+    final String movedItemName = pendingItems[index];
+    usedItems.add("$movedItemName | Se utiliza en: $location");
     pendingItems.removeAt(index);
 
-    UserRepository.instance.movePendingItem(movedItem, location);
+    try {
+      await UserRepository.instance.movePendingItem(movedItemName, location);
+      Get.snackbar('Genial', 'El item está ahora en uso');
+    } catch (error) {
+      Get.snackbar('Ups', 'No se ha podido guardar este item: $error');
+      print("error: $error");
+    }
   }
 
   Future<void> loadNotUsedItems() async {

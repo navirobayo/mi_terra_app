@@ -22,12 +22,18 @@ class TasksController extends GetxController {
     }
   }
 
-  void completeTask(int index) {
+  void completeTask(int index) async {
     final String completedTask = pendingTasks[index];
     completedTasks.add(completedTask);
     pendingTasks.removeAt(index);
 
-    UserRepository.instance.completeTask(completedTask);
+    try {
+      await UserRepository.instance.completeTask(completedTask);
+      Get.snackbar('Genial', 'Has completado esta tarea');
+    } catch (error) {
+      Get.snackbar('Ups', 'No se ha podido guardar esta tarea: $error');
+      print("error: $error");
+    }
   }
 
   Future<void> loadPendingTasks() async {

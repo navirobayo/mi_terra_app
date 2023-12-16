@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
-import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_global_data_controller.dart';
@@ -13,6 +12,7 @@ import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart'
 import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
 import 'package:mi_terra_app/src/front_end/inventory_screen/inventory_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
+import 'package:mi_terra_app/src/front_end/profit_screen/profit_screen.dart';
 import 'package:mi_terra_app/src/front_end/settings_screen/settings_screen.dart';
 import 'package:mi_terra_app/src/front_end/store_screen/store_screen.dart';
 import 'package:mi_terra_app/src/front_end/tasks_screen/tasks_screen.dart';
@@ -387,11 +387,6 @@ class HomeScreen extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  showProfileView(context);
-                },
-                icon: const Icon(Icons.eco)),
-            IconButton(
-                onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SettingsScreen(),
                   ));
@@ -416,7 +411,7 @@ class HomeScreen extends StatelessWidget {
                         },
                       )),
                   const Text(
-                    "Mi tienda",
+                    "Mi Tienda",
                   ),
                   const SizedBox(
                     width: 100,
@@ -434,13 +429,13 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => InventoryScreen(),
+                          builder: (context) => TasksScreen(),
                         ));
                       },
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Inventario')),
+                        child: Center(child: Text('Pendientes')),
                       ),
                     ),
                   ),
@@ -454,13 +449,13 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TasksScreen(),
+                          builder: (context) => InventoryScreen(),
                         ));
                       },
                       child: const SizedBox(
                         width: 150,
                         height: 150,
-                        child: Center(child: Text('Pendientes')),
+                        child: Center(child: Text('Inventario')),
                       ),
                     ),
                   ),
@@ -566,11 +561,60 @@ class HomeScreen extends StatelessWidget {
                     elevation: 3,
                     child: InkWell(
                       splashColor: Theme.of(context).colorScheme.primary,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const StoreScreen(),
+                        ));
+                      },
+                      child: const SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Center(child: Text('Vitrina virtual')),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Card(
+                    clipBehavior: Clip.hardEdge,
+                    elevation: 3,
+                    child: InkWell(
+                      splashColor: Theme.of(context).colorScheme.primary,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const ProfitScreen(),
+                        ));
+                      },
                       child: const SizedBox(
                         width: 150,
                         height: 150,
                         child: Center(child: Text('Mis finanzas')),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 50,
+                  ),
+                  Card(
+                    clipBehavior: Clip.hardEdge,
+                    elevation: 3,
+                    child: InkWell(
+                      splashColor: Theme.of(context).colorScheme.primary,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TasksScreen(),
+                        ));
+                      },
+                      child: const SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: Center(child: Text('Cool logo here.')),
                       ),
                     ),
                   ),

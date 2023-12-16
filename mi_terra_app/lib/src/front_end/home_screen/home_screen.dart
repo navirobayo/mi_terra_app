@@ -415,7 +415,7 @@ class HomeScreen extends StatelessWidget {
                     "Mi Tienda",
                   ),
                   const SizedBox(
-                    width: 100,
+                    width: 120,
                   ),
                   ConnectivityWidget()
                 ],
@@ -434,8 +434,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Pendientes')),
                       ),
                     ),
@@ -454,8 +454,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Inventario')),
                       ),
                     ),
@@ -479,8 +479,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Mis productos')),
                       ),
                     ),
@@ -501,7 +501,7 @@ class HomeScreen extends StatelessWidget {
                             showSelectionMenuForExpenses(context);
                           },
                           child: const SizedBox(
-                            width: 150,
+                            width: 120,
                             height: 60,
                             child: Center(child: Text('Añadir gasto')),
                           ),
@@ -521,7 +521,7 @@ class HomeScreen extends StatelessWidget {
                             showSelectionMenuForSales(context);
                           },
                           child: const SizedBox(
-                            width: 150,
+                            width: 120,
                             height: 60,
                             child: Center(child: Text('Añadir venta')),
                           ),
@@ -548,8 +548,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Contactos')),
                       ),
                     ),
@@ -568,8 +568,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Vitrina virtual')),
                       ),
                     ),
@@ -593,8 +593,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Estadísticas')),
                       ),
                     ),
@@ -613,8 +613,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 150,
-                        height: 150,
+                        width: 120,
+                        height: 120,
                         child: Center(child: Text('Cool logo here.')),
                       ),
                     ),

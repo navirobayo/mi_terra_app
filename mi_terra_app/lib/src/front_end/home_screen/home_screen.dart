@@ -415,7 +415,7 @@ class HomeScreen extends StatelessWidget {
                     "Mi Tienda",
                   ),
                   const SizedBox(
-                    width: 120,
+                    width: 50,
                   ),
                   ConnectivityWidget()
                 ],
@@ -434,14 +434,14 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Pendientes')),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 25,
                   ),
                   Card(
                     clipBehavior: Clip.hardEdge,
@@ -454,8 +454,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Inventario')),
                       ),
                     ),
@@ -463,7 +463,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -479,14 +479,14 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Mis productos')),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 25,
                   ),
                   Column(
                     children: [
@@ -501,7 +501,7 @@ class HomeScreen extends StatelessWidget {
                             showSelectionMenuForExpenses(context);
                           },
                           child: const SizedBox(
-                            width: 120,
+                            width: 150,
                             height: 60,
                             child: Center(child: Text('Añadir gasto')),
                           ),
@@ -521,7 +521,7 @@ class HomeScreen extends StatelessWidget {
                             showSelectionMenuForSales(context);
                           },
                           child: const SizedBox(
-                            width: 120,
+                            width: 150,
                             height: 60,
                             child: Center(child: Text('Añadir venta')),
                           ),
@@ -532,7 +532,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -548,14 +548,14 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Contactos')),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 25,
                   ),
                   Card(
                     clipBehavior: Clip.hardEdge,
@@ -568,8 +568,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Vitrina virtual')),
                       ),
                     ),
@@ -577,7 +577,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -593,14 +593,14 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Estadísticas')),
                       ),
                     ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 25,
                   ),
                   Card(
                     clipBehavior: Clip.hardEdge,
@@ -613,8 +613,8 @@ class HomeScreen extends StatelessWidget {
                         ));
                       },
                       child: const SizedBox(
-                        width: 120,
-                        height: 120,
+                        width: 150,
+                        height: 150,
                         child: Center(child: Text('Cool logo here.')),
                       ),
                     ),

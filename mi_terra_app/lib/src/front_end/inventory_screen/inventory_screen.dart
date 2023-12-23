@@ -103,6 +103,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     return Scaffold(
       body: Column(
         children: [
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.all(20),
             child: SegmentedButton<ItemStatus>(

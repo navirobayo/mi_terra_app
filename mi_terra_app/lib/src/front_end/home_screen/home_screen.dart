@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/components/custom_connectivity_widget.dart';
+import 'package:mi_terra_app/src/back_end/components/global_strings.dart';
+import 'package:mi_terra_app/src/back_end/components/mi_terra_app_icons.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/get_global_data_controller.dart';
@@ -9,6 +11,7 @@ import 'package:mi_terra_app/src/back_end/controllers/radio_button_controller.da
 import 'package:mi_terra_app/src/back_end/controllers/get_products_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
 import 'package:mi_terra_app/src/front_end/contacts_screen/contacts_screen.dart';
+import 'package:mi_terra_app/src/front_end/development_screens/available_soon_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/order_type_button.dart';
 import 'package:mi_terra_app/src/front_end/inventory_screen/inventory_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/products_screen.dart';
@@ -589,7 +592,7 @@ class HomeScreen extends StatelessWidget {
                       splashColor: Theme.of(context).colorScheme.primary,
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const ProfitScreen(),
+                          builder: (context) => const AvailableSoonScreen(),
                         ));
                       },
                       child: const SizedBox(
@@ -602,21 +605,30 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(
                     width: 25,
                   ),
-                  Card(
-                    clipBehavior: Clip.hardEdge,
-                    elevation: 3,
-                    child: InkWell(
-                      splashColor: Theme.of(context).colorScheme.primary,
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => TasksScreen(),
-                        ));
-                      },
-                      child: const SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: Center(child: Text('Cool logo here.')),
-                      ),
+                  SizedBox(
+                    height: 150,
+                    width: 150,
+                    child: Stack(
+                      children: [
+                        Icon(
+                          MiTerraAppIcons.logoVer1_0_0,
+                          color: Theme.of(context).colorScheme.onBackground,
+                          size: 140,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "Ver. $appVersion",
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

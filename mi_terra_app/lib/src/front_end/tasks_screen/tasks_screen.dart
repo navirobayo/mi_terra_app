@@ -65,6 +65,7 @@ class _TasksScreenState extends State<TasksScreen> {
     return Scaffold(
       body: Column(
         children: [
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.all(20),
             child: SegmentedButton<TaskStatus>(

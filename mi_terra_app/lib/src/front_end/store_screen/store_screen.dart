@@ -90,25 +90,17 @@ class StoreScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Row(
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        children: [
-                                          Text(product['product_name']),
-                                          Text(
-                                            "\$${product['product_price'] ?? 0}",
-                                          ),
-                                          Text(
-                                            "${product['products_ready'] ?? 0} Disponibles",
-                                          ),
-                                        ],
+                                      Text(
+                                          "${product['product_name']} \$${product['product_price']}"),
+                                      Text(
+                                        "${product['products_ready'] ?? 0} Disponibles",
                                       ),
-                                      const Spacer(),
-                                      const IconButton(
-                                          onPressed: null,
-                                          icon: Icon(Icons.logout))
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),

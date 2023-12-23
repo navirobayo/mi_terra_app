@@ -9,10 +9,9 @@ class PublicProductViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(product['product_name'])),
-      body: ListView(
-        children: [],
-      ),
-    );
+        appBar: AppBar(title: Text(product['product_name'])),
+        body: const Center(
+          child: Text("¡Funcionalidad disponible muy pronto!"),
+        ));
   }
 }

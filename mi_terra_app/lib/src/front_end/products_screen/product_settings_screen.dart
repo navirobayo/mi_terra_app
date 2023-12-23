@@ -5,9 +5,11 @@ class ProductSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView(
-      children: [
+    return const Scaffold(
+        body: Center(child: Text("¡Funcionalidad disponible muy pronto!"))
+
+        /* ListView(
+      children: [ 
         ListTile(
           title: Text("Cambiar nombre"),
         ),
@@ -40,12 +42,13 @@ class ProductSettingsScreen extends StatelessWidget {
         ),
         ListTile(
           title: Text(
-              "Ver / Generar reporte"), //* Esta pantalla puede mostrar también el tiempo que lleva en producción y las unidades vendidas.
+              "Ver / Generar reporte"), 
         ),
         ListTile(
           title: Text("Eliminar producto permanentemente"),
-        ),
-      ],
-    ));
+        ), 
+      ], 
+    )*/
+        );
   }
 }

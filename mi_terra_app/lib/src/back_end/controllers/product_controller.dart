@@ -21,7 +21,7 @@ class ProductController extends GetxController {
       'product_profits': 0,
       'product_images': [],
       'product_cover':
-          "https://firebasestorage.googleapis.com/v0/b/mi-terra-app.appspot.com/o/terra_database%2FCaptura%20de%20pantalla%202023-12-06%20212051.png?alt=media&token=5c031e59-c48e-4b5c-9aeb-6e0b84c3ca08",
+          "https://firebasestorage.googleapis.com/v0/b/mi-terra-app.appspot.com/o/terra_database%2Fdefault_image_ver_1.0.0.png?alt=media&token=00382cda-0d8c-4945-9b34-a42d3bec1f4c",
       'product_frequency': 0,
       'product_units': 0,
       'products_ready': 0,

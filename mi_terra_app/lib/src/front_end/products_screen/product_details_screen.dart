@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/product_units_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/sale_controller.dart';
+import 'package:mi_terra_app/src/front_end/development_screens/available_soon_screen.dart';
 import 'package:mi_terra_app/src/front_end/home_screen/home_screen.dart';
 import 'package:mi_terra_app/src/front_end/products_screen/product_settings_screen.dart';
 
@@ -205,7 +206,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  width: 30,
+                  width: 10,
                 ),
                 Column(
                   children: [
@@ -230,17 +231,23 @@ class ProductDetailsScreen extends StatelessWidget {
               children: [
                 IconButton.outlined(
                     onPressed: () {
-                      print("test");
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AvailableSoonScreen(),
+                      ));
                     },
                     icon: const Icon(Icons.app_registration_outlined)),
                 IconButton.outlined(
                     onPressed: () {
-                      print("test");
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AvailableSoonScreen(),
+                      ));
                     },
                     icon: const Icon(Icons.camera_alt_outlined)),
                 IconButton.outlined(
                     onPressed: () {
-                      print("test");
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const AvailableSoonScreen(),
+                      ));
                     },
                     icon: const Icon(Icons.qr_code_2_outlined)),
               ],

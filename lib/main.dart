@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mi_terra_app/firebase_options.dart';
 import 'package:mi_terra_app/src/back_end/controllers/contact_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/expense_controller.dart';
 import 'package:mi_terra_app/src/back_end/controllers/general_expense_controller.dart';
@@ -21,7 +22,6 @@ import 'package:mi_terra_app/src/back_end/repositories/authentication_repository
 import 'package:mi_terra_app/src/back_end/components/flutter_mi_terra_theme.dart';
 import 'package:mi_terra_app/src/back_end/repositories/user_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'src/private/firebase_options.dart';
 
 //* Welcome. Mi Terra App Ver. 1.0.0
 //
